@@ -9,16 +9,15 @@
         responsibleExtern: 'RTC',
         dateAdded: '2022-01-21',
         dateDue: '2022-01-30',
-        status: 'pending'
+        status: 'pending',
+        note: ''
       }
     ]
   };
   let currentList = 'default';
-  let subject, task, responsibleIntern, responsibleExtern, dateAdded, dateDue, status, notes;
+  let subject, task, responsibleIntern, responsibleExtern, dateAdded, dateDue, status, note, id;
 
   const handleSubmit = () => {
-    // handle submit new todo
-
     if (!dateAdded) {
       const date = new Date();
       dateAdded =
@@ -28,6 +27,7 @@
         '-' +
         (date.getDate() > 9 ? date.getDate() : '0' + date.getDate());
     }
+    id = todoLists[currentList].length + 1;
     const newTodo = {
       subject,
       task,
@@ -36,8 +36,11 @@
       dateDue,
       dateAdded,
       status,
-      notes
+      note,
+      id
     };
+    todoLists[currentList].push(newTodo);
+    todoLists = todoLists;
     console.log(newTodo);
   };
 </script>
@@ -49,7 +52,7 @@
     <h2>Add new task</h2>
     <label
       >Subject
-      <input type="text" bind:value={subject} placeholder="subject" />
+      <input type="text" bind:value={subject} placeholder="enter task subject" />
     </label>
     <label
       >Task:
@@ -77,7 +80,7 @@
     </label>
     <label
       >Notes:
-      <input type="text" bind:value={notes} placeholder="add notes" />
+      <input type="text" bind:value={note} placeholder="add notes" />
     </label>
     <button>Submit task</button>
   </form>
@@ -87,31 +90,48 @@
   <ul>
     {#each todoLists[currentList] as todo (todo.id)}
       <li>
-        <div><strong>{todo.subject}: </strong></div>
-        <div class="task">{todo.task}</div>
-        <div>{todo.responsibleIntern}</div>
-        <div>{todo.responsibleExtern}</div>
-        <div>{todo.dateDue}</div>
-        <div>{todo.status}</div>
+        <div>
+          <div>{todo.subject}:</div>
+          <div class="task"><strong>{todo.task}</strong></div>
+          <div>{todo.status}</div>
+        </div>
+        <div class="bottom-line">
+          <div>resp. <strong>{todo.responsibleIntern}</strong></div>
+          <div>ext.resp. <strong>{todo.responsibleExtern}</strong></div>
+          <div class="notes">note: {todo.note}</div>
+          <div>{todo.dateDue}</div>
+        </div>
       </li>
     {/each}
   </ul>
 </main>
 
 <style>
+  input {
+    height: 1.5em !important;
+  }
   main {
     padding: 1rem;
   }
 
   li {
+    border: 1px solid black;
+    padding: 0.4rem;
+    background-color: beige;
+  }
+  li > div {
     display: flex;
     justify-content: space-between;
     gap: 10px;
-    background-color: beige;
     padding-left: 8px;
     padding-right: 8px;
   }
-  .task {
-    flex-grow: 4;
+  .task,
+  .notes {
+    flex-grow: 5;
+  }
+
+  .bottom-line {
+    font-size: small;
   }
 </style>
