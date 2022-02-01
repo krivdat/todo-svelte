@@ -1,6 +1,6 @@
 <script>
   export let todos = [];
-
+  console.log(todos);
   $: totalTodos = todos.length;
   $: completedTodos = todos.filter((todo) => todo.status == 'completed').length;
   $: overdueTodos = todos.filter((todo) => todo.status == 'overdue').length;
@@ -55,6 +55,7 @@
       id
     };
     todos.push(newTodo);
+    alert('added:' + newTodo.task);
     todos = todos;
     emptyNewTodo();
     // console.log(newTodo);
