@@ -1,12 +1,175 @@
 <script context="module">
+  export async function load({ fetch }) {
+    try {
+      const res = await fetch('/api/todos.json');
+      const { todos } = await res.json();
+      if (res.ok) {
+        return {
+          props: { todos }
+        };
+      }
+
+      return {
+        status: res.status,
+        error: new Error('Could not fetch todos')
+      };
+    } catch (err) {
+      return {
+        status: 500,
+        error: new Error('Could not fetch todos')
+      };
+    }
+  }
 </script>
 
 <script>
-  import Todos from '$lib/components/Todos.svelte';
+  export let todos;
+  import { fade } from 'svelte/transition';
+  import Todo from '$lib/components/Todo.svelte';
+  import InputForm from '$lib/components/InputForm.svelte';
+
+  $: totalTodos = todos.length;
+  $: completedTodos = todos.filter((todo) => todo.completed).length;
+  $: overdueTodos = todos.filter((todo) => todo.status == 'overdue').length;
+
+  async function fetchTodos() {
+    try {
+      const res = await fetch('/api/todos.json');
+      const data = await res.json();
+
+      if (res.ok) {
+        todos = data.todos;
+      }
+    } catch (error) {
+      return new Error('Could not fetch list of todos');
+    }
+  }
+
+  async function handleSubmit(e) {
+    try {
+      const res = await fetch('/api/todos.json', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(e.detail)
+      });
+
+      if (res.ok) {
+        fetchTodos();
+        return;
+      }
+
+      alert('Could not add new todo');
+    } catch (error) {
+      return new Error('Could add new todo');
+    }
+  }
+
+  async function handleDelete(id) {
+    console.log(id);
+    try {
+      const res = await fetch('/api/todos.json', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(id)
+      });
+      if (res.ok) {
+        fetchTodos();
+        return;
+      }
+
+      alert('Could not delete todo');
+    } catch (error) {
+      return new Error('Could not delete todo');
+    }
+  }
+
+  async function handleComplete(id) {
+    const todo = todos.find((todo) => todo._id == id);
+    try {
+      const res = await fetch('/api/todos.json', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          id,
+          change: { completed: !todo.completed }
+        })
+      });
+
+      if (res.ok) {
+        fetchTodos();
+        return;
+      }
+
+      alert('Could not add new todo');
+    } catch (error) {
+      return new Error('Could add new todo');
+    }
+  }
 </script>
 
 <svelte:head>
   <title>Todo List</title>
 </svelte:head>
 
-<Todos />
+<h1>Task manager</h1>
+
+<InputForm on:submit={handleSubmit} />
+
+<!-- Filter -->
+<div class="filters">
+  <button>All</button>
+  <button>Pending</button>
+  <button>Overdue</button>
+  <button>Completed</button>
+</div>
+
+<!-- Todos status -->
+<h2>
+  {completedTodos} out of {totalTodos} items completed,
+  <span class="txt-danger">{overdueTodos} item(s) overdue</span>
+</h2>
+
+<!-- List of todos -->
+<h2>Selected tasks</h2>
+
+<ul>
+  {#each todos as todo (todo._id)}
+    <li transition:fade>
+      <Todo {todo} on:delete={handleDelete(todo._id)} on:complete={handleComplete(todo._id)} />
+    </li>
+  {:else}
+    <p>nothing to do</p>
+  {/each}
+</ul>
+
+<hr />
+
+<!-- More Actions -->
+<div>
+  <button type="button">Check all</button>
+  <button type="button">Remove completed</button>
+</div>
+
+<style>
+  h1 {
+    margin-top: 0;
+  }
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  li {
+    padding: 0.4rem;
+    background-color: beige;
+  }
+
+  li:not(:last-child) {
+    margin-bottom: 0.3rem;
+  }
+</style>
