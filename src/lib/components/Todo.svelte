@@ -28,7 +28,7 @@
   <div>
     <button type="button" on:click={handleDeleteClick}>Delete</button>
     <button type="button" class:completed={todo.completed} on:click={handleCompleteClick}>
-      Done?
+      Done
     </button>
   </div>
 </div>

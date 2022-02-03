@@ -28,7 +28,20 @@
   import Todo from '$lib/components/Todo.svelte';
   import InputForm from '$lib/components/InputForm.svelte';
 
+  // filter rule is object consisting of keys/values:
+  // todo item property
+  // todo item value to compare
+  let filterRules = [
+    {
+      property: 'completed',
+      value: 'true'
+    }
+  ];
+  let todosFiltered = [];
+
+  // $: todosFiltered = filterTodos(filterRules);
   $: totalTodos = todos.length;
+  // $: totalTodosFiltered = todosFiltered.length;
   $: completedTodos = todos.filter((todo) => todo.completed).length;
   $: overdueTodos = todos.filter((todo) => todo.status == 'overdue').length;
 
@@ -43,6 +56,27 @@
     } catch (error) {
       return new Error('Could not fetch list of todos');
     }
+  }
+
+  function filterTodos(rules) {
+    if (!rules.length > 0) {
+      todosFiltered = todos;
+      console.log('no rules applied');
+      return;
+    }
+    console.log(rules);
+    const filtered = todos.filter((todo) => {
+      let pass = false;
+      rules.forEach((rule) => {
+        console.log(rule.property, todo[rule.property], rule.value);
+        if (todo[rule.property] == rule.value) {
+          pass = true;
+        }
+      });
+      return pass;
+    });
+    console.log(filtered);
+    return filtered;
   }
 
   async function handleSubmit(e) {
@@ -111,6 +145,9 @@
       return new Error('Could add new todo');
     }
   }
+  function showCompleted() {
+    filterTodos({ property: 'completed', value: true });
+  }
 </script>
 
 <svelte:head>
@@ -126,7 +163,7 @@
   <button>All</button>
   <button>Pending</button>
   <button>Overdue</button>
-  <button>Completed</button>
+  <button on:click={showCompleted}>Completed</button>
 </div>
 
 <!-- Todos status -->
@@ -140,7 +177,7 @@
 
 <ul>
   {#each todos as todo (todo._id)}
-    <li transition:fade>
+    <li class:completed={todo.completed} transition:fade>
       <Todo {todo} on:delete={handleDelete(todo._id)} on:complete={handleComplete(todo._id)} />
     </li>
   {:else}
@@ -167,6 +204,11 @@
   li {
     padding: 0.4rem;
     background-color: beige;
+  }
+
+  li.completed {
+    background-color: rgb(200, 208, 218);
+    color: #444;
   }
 
   li:not(:last-child) {

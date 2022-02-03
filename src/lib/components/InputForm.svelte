@@ -55,8 +55,6 @@
 
 <!-- Input form -->
 <form on:submit|preventDefault={handleSubmit}>
-  <h2>Add new task</h2>
-
   <div class="form-group">
     <label class="form-input-wide"
       >Task:
