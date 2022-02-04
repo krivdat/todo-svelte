@@ -45,7 +45,8 @@
       responsibleIntern,
       dateDue,
       dateAdded,
-      note
+      note,
+      completed
     };
     // dispatch new todo object to main app compoment
     dispatch('submit', newTodo);

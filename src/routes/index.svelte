@@ -4,6 +4,7 @@
       const res = await fetch('/api/todos.json');
       const { todos } = await res.json();
       if (res.ok) {
+        console.log({ todos });
         return {
           props: { todos }
         };
@@ -28,20 +29,10 @@
   import Todo from '$lib/components/Todo.svelte';
   import InputForm from '$lib/components/InputForm.svelte';
 
-  // filter rule is object consisting of keys/values:
-  // todo item property
-  // todo item value to compare
-  let filterRules = [
-    {
-      property: 'completed',
-      value: 'true'
-    }
-  ];
-  let todosFiltered = [];
-
-  // $: todosFiltered = filterTodos(filterRules);
+  let filterRules = {};
+  $: todosFiltered = filterTodos(todos, filterRules);
   $: totalTodos = todos.length;
-  // $: totalTodosFiltered = todosFiltered.length;
+  $: totalTodosFiltered = todosFiltered.length;
   $: completedTodos = todos.filter((todo) => todo.completed).length;
   $: overdueTodos = todos.filter((todo) => todo.status == 'overdue').length;
 
@@ -58,25 +49,13 @@
     }
   }
 
-  function filterTodos(rules) {
-    if (!rules.length > 0) {
-      todosFiltered = todos;
-      console.log('no rules applied');
-      return;
-    }
-    console.log(rules);
-    const filtered = todos.filter((todo) => {
-      let pass = false;
-      rules.forEach((rule) => {
-        console.log(rule.property, todo[rule.property], rule.value);
-        if (todo[rule.property] == rule.value) {
-          pass = true;
-        }
-      });
-      return pass;
+  function filterTodos(list, rules) {
+    return list.filter((todo) => {
+      for (let key in rules) {
+        if (todo[key] === undefined || todo[key] != rules[key]) return false;
+      }
+      return true;
     });
-    console.log(filtered);
-    return filtered;
   }
 
   async function handleSubmit(e) {
@@ -145,8 +124,18 @@
       return new Error('Could add new todo');
     }
   }
+
   function showCompleted() {
-    filterTodos({ property: 'completed', value: true });
+    filterRules = { completed: true };
+  }
+
+  function showAll() {
+    filterRules = {};
+  }
+
+  function showPending() {
+    filterRules = { completed: false };
+    console.log({ todosFiltered, todos });
   }
 </script>
 
@@ -160,8 +149,8 @@
 
 <!-- Filter -->
 <div class="filters">
-  <button>All</button>
-  <button>Pending</button>
+  <button on:click={showAll}>All</button>
+  <button on:click={showPending}>Pending</button>
   <button>Overdue</button>
   <button on:click={showCompleted}>Completed</button>
 </div>
@@ -176,8 +165,8 @@
 <h2>Selected tasks</h2>
 
 <ul>
-  {#each todos as todo (todo._id)}
-    <li class:completed={todo.completed} transition:fade>
+  {#each todosFiltered as todo (todo._id)}
+    <li class:completed={todo.completed} transition:fade={{ duration: 150 }}>
       <Todo {todo} on:delete={handleDelete(todo._id)} on:complete={handleComplete(todo._id)} />
     </li>
   {:else}
