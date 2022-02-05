@@ -4,7 +4,7 @@
       const res = await fetch('/api/todos.json');
       const { todos } = await res.json();
       if (res.ok) {
-        console.log({ todos });
+        // console.log({ todos });
         return {
           props: { todos }
         };
@@ -80,7 +80,7 @@
   }
 
   async function handleDelete(id) {
-    console.log(id);
+    // console.log(id);
     try {
       const res = await fetch('/api/todos.json', {
         method: 'DELETE',
@@ -135,7 +135,7 @@
 
   function showPending() {
     filterRules = { completed: false };
-    console.log({ todosFiltered, todos });
+    // console.log({ todosFiltered, todos });
   }
 </script>
 

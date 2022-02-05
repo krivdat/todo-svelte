@@ -1,9 +1,20 @@
-import dotenv from 'dotenv';
-dotenv.config();
+// import dotenv from 'dotenv';
+// dotenv.config();
 
+import { MONGODB_URI } from '$lib/env';
 import { MongoClient } from 'mongodb';
 
-const uri = process.env['MONGODB_URI'];
+let uri;
+if (process.env.NODE_ENV === 'production') {
+  // For production
+  uri = process.env['MONGODB_URI'];
+} else {
+  // For development
+  uri = MONGODB_URI;
+}
+
+// const uri = process.env['MONGODB_URI'];
+
 const options = {
   useUnifiedTopology: true,
   useNewUrlParser: true
