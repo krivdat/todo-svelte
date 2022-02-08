@@ -1,12 +1,23 @@
 import clientPromise from '$lib/mongodb-client';
 import { ObjectId } from 'mongodb';
 
-export async function get() {
+export async function get({ url }) {
+  const list = url.searchParams.get('list');
   try {
     const dbConnection = await clientPromise;
     const db = dbConnection.db();
-    const collection = db.collection('todos');
+    const collections = await db.listCollections().toArray();
+    const collectionNames = collections.map((item) => item.name);
+    console.log({ collectionNames });
+    if (!collectionNames.includes(list)) {
+      console.log(`Collection ${list} does not exist`);
+      return {
+        status: 400,
+        error: new Error('Requested todo list does not exist')
+      };
+    }
 
+    const collection = db.collection(list);
     const todos = await collection.find().toArray();
 
     return {
@@ -16,6 +27,7 @@ export async function get() {
       }
     };
   } catch (error) {
+    console.log({ error });
     return {
       status: 500,
       error: new Error('Error while getting todos from database')
@@ -23,12 +35,14 @@ export async function get() {
   }
 }
 
-export async function post({ request }) {
+export async function post({ request, url }) {
   const todo = await request.json();
+  const list = url.searchParams.get('list');
+
   try {
     const dbConnection = await clientPromise;
     const db = dbConnection.db();
-    const collection = db.collection('todos');
+    const collection = db.collection(list);
     const { insertedId } = await collection.insertOne(todo);
     return {
       status: 200,
@@ -44,12 +58,14 @@ export async function post({ request }) {
   }
 }
 
-export async function put({ request }) {
+export async function put({ request, url }) {
   const { id, change } = await request.json();
+  const list = url.searchParams.get('list');
+
   try {
     const dbConnection = await clientPromise;
     const db = dbConnection.db();
-    const collection = db.collection('todos');
+    const collection = db.collection(list);
     const { modifiedCount } = await collection.updateOne({ _id: ObjectId(id) }, { $set: change });
     return {
       status: 200,
@@ -66,13 +82,14 @@ export async function put({ request }) {
   }
 }
 
-export async function del({ request }) {
+export async function del({ request, url }) {
   const id = await request.json();
+  const list = url.searchParams.get('list');
 
   try {
     const dbConnection = await clientPromise;
     const db = dbConnection.db();
-    const collection = db.collection('todos');
+    const collection = db.collection(list);
     const result = await collection.deleteOne({ _id: ObjectId(id) });
 
     return {
