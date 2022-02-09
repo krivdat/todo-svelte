@@ -153,48 +153,63 @@
   <title>Todo List</title>
 </svelte:head>
 
-<h1>Task manager - {list}</h1>
+<section class="input-and-filters">
+  <h1>Task manager - {list}</h1>
 
-<InputForm on:submit={handleSubmit} />
+  <InputForm on:submit={handleSubmit} />
 
-<!-- Filter -->
-<div class="filters">
-  <button on:click={showAll}>All</button>
-  <button on:click={showPending}>Pending</button>
-  <button on:click={showOverdue}>Overdue</button>
-  <button on:click={showCompleted}>Completed</button>
-</div>
+  <!-- Filter -->
+  <div class="filters">
+    <button on:click={showAll}>All</button>
+    <button on:click={showPending}>Pending</button>
+    <button on:click={showOverdue}>Overdue</button>
+    <button on:click={showCompleted}>Completed</button>
+  </div>
 
-<!-- Todos status -->
-<h2>
-  {completedTodos} out of {totalTodos} items completed,
-  <span class="txt-danger">{overdueTodos} item(s) overdue</span>
-</h2>
+  <!-- Todos status -->
+  <h2>
+    {completedTodos} out of {totalTodos} items completed,
+    <span class="txt-danger">{overdueTodos} item(s) overdue</span>
+  </h2>
+</section>
 
-<!-- List of todos -->
-<h2>Selected tasks</h2>
+<section class="tasks">
+  <!-- List of todos -->
+  <h2>Selected tasks</h2>
 
-<ul>
-  {#each todosFiltered as todo (todo._id)}
-    <li class:completed={todo.completed} transition:fade={{ duration: 150 }}>
-      <Todo {todo} on:delete={handleDelete(todo._id)} on:complete={handleComplete(todo._id)} />
-    </li>
-  {:else}
-    <p>nothing to do</p>
-  {/each}
-</ul>
+  <ul>
+    {#each todosFiltered as todo (todo._id)}
+      <li class:completed={todo.completed} transition:fade={{ duration: 150 }}>
+        <Todo {todo} on:delete={handleDelete(todo._id)} on:complete={handleComplete(todo._id)} />
+      </li>
+    {:else}
+      <p>nothing to do</p>
+    {/each}
+  </ul>
 
-<hr />
+  <hr />
 
-<!-- More Actions -->
-<div>
-  <!-- <button type="button">Check all</button> -->
-  <!-- <button type="button">Remove completed</button> -->
-</div>
+  <!-- More Actions -->
+  <div>
+    <!-- <button type="button">Check all</button> -->
+    <!-- <button type="button">Remove completed</button> -->
+  </div>
+</section>
 
 <style>
+  section.input-and-filters {
+    background-color: rgba(150, 138, 123, 0.5);
+    padding: 1rem;
+  }
+  section.tasks {
+    padding: 1rem;
+  }
   h1 {
     margin-top: 0;
+  }
+  h2 {
+    margin-top: 0;
+    margin-bottom: 0.6em;
   }
   ul {
     list-style-type: none;
@@ -202,13 +217,13 @@
   }
   li {
     padding: 0.4rem;
-    background-color: beige;
+    background-color: rgba(150, 138, 123, 0.3);
     border-radius: 5px;
   }
 
   li.completed {
-    background-color: rgb(200, 208, 218);
-    color: #444;
+    background-color: rgb(225, 230, 236);
+    color: rgb(107, 107, 107);
   }
 
   li:not(:last-child) {
@@ -221,5 +236,8 @@
   }
   button:hover {
     cursor: pointer;
+  }
+  .filters {
+    margin-bottom: 1.2em;
   }
 </style>

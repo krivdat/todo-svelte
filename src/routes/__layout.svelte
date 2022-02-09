@@ -31,8 +31,8 @@
   main {
     max-width: 960px;
     margin: 0 auto 20px;
-    padding: 1rem;
-    background-color: rgba(150, 138, 123, 0.5);
+    /* padding: 1rem; */
+    /* background-color: rgba(150, 138, 123, 0.5); */
   }
   /* main.error {
     max-width: 100%;

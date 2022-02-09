@@ -19,7 +19,7 @@
     border: 1px solid black;
     border-radius: 5px;
     text-align: center;
-    box-shadow: 1px 1px 2px gray;
+    box-shadow: 1px 1px 5px rgba(83, 82, 82, 50%);
   }
   .todos div:hover {
     background-color: rgba(150, 138, 123, 1);
