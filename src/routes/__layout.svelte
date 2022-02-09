@@ -28,26 +28,34 @@
 <style>
   main {
     max-width: 960px;
-    margin: 20px auto;
+    margin: 0 auto 20px;
     padding: 1rem;
-    background-color: lightsteelblue;
+    background-color: rgba(150, 138, 123, 0.5);
   }
   /* main.error {
     max-width: 100%;
     padding: 4rem 2rem;
     background-color: indianred;
   } */
+  header {
+    position: sticky;
+    top: 0;
+  }
   nav {
-    background-color: indigo;
+    background-color: #222;
     color: azure;
-    padding: 0.5em 1em;
   }
   nav ul {
     display: flex;
     list-style-type: none;
-    padding: 0;
     margin: 0;
-    gap: 1em;
+    padding: 0 0 0 1em;
+  }
+  nav ul li {
+    padding: 0.5em 0.5em;
+  }
+  nav ul li:hover {
+    background-color: rgba(150, 138, 123, 0.5);
   }
   nav a,
   nav a:visited {
@@ -55,7 +63,6 @@
     text-decoration: none;
   }
   nav a:hover {
-    color: rgb(201, 199, 85);
   }
   footer {
     text-align: center;

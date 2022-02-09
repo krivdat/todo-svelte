@@ -15,48 +15,82 @@
   }
 </script>
 
-<div class="todo-item">
+<div class="group">
   <div>{todo.subject}:</div>
-  <div class="task"><strong>{todo.task}</strong></div>
-  <div>
+  <div class="task">{todo.task}</div>
+</div>
+
+<div class="group">
+  <div>resp.int. <strong>{todo.responsibleIntern}</strong></div>
+  <div>resp.ext. <strong>{todo.responsibleExtern}</strong></div>
+  <div class="status">
     {#if todo.completed}
       completed
     {:else}
       pending
     {/if}
   </div>
-  <div>
-    <button type="button" on:click={handleDeleteClick}>Delete</button>
-    <button type="button" class:completed={todo.completed} on:click={handleCompleteClick}>
-      Done
-    </button>
-  </div>
-</div>
-<div class="todo-item bottom-line">
-  <div>resp.int. <strong>{todo.responsibleIntern}</strong></div>
-  <div>resp.ext. <strong>{todo.responsibleExtern}</strong></div>
-  <div class="notes">note: {todo.note}</div>
   <div>{todo.dateDue}</div>
 </div>
 
+<div class="group">
+  <div class="notes">note: {todo.note}</div>
+  <button class="btn-danger" type="button" on:click={handleDeleteClick}>Delete</button>
+  <button
+    class="btn-action"
+    type="button"
+    class:completed={todo.completed}
+    on:click={handleCompleteClick}
+  >
+    Done
+  </button>
+</div>
+
 <style>
-  .todo-item {
+  .group {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     gap: 10px;
-    padding-left: 8px;
-    padding-right: 8px;
+    font-size: small;
+    margin-bottom: 0.2em;
+  }
+  .status,
+  .btn-danger {
+    margin-left: auto;
+  }
+  .task {
+    font-weight: 600;
+    font-size: medium;
+    flex-grow: 1;
   }
   .completed {
     background-color: green;
     color: beige;
   }
-  .task,
-  .notes {
-    flex-grow: 5;
+
+  button {
+    display: inline-block;
+    padding: 0.3em 0.7em;
+    border: none;
+    border-radius: 0.2em;
+    box-sizing: border-box;
+    font-weight: 300;
+    text-align: center;
+    transition: all 0.2s;
+    opacity: 0.7;
+  }
+  button:hover {
+    cursor: pointer;
+    opacity: 1;
   }
 
-  .bottom-line {
-    font-size: small;
+  .btn-danger {
+    background-color: red;
+    color: white;
+  }
+  .btn-action {
+    background-color: green;
+    color: white;
   }
 </style>

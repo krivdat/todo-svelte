@@ -57,9 +57,9 @@
 <!-- Input form -->
 <form on:submit|preventDefault={handleSubmit}>
   <div class="form-group">
-    <label
+    <label class="input-wide"
       >Task:
-      <input class="input-wide" type="text" bind:value={task} />
+      <input type="text" bind:value={task} />
     </label>
   </div>
   <div class="form-group">
@@ -67,23 +67,13 @@
       >Category
       <input type="text" id="subject" bind:value={subject} />
     </label>
-    <label for="responsibleIntern"
-      >Resp.int.
-      <input
-        class="input-small"
-        type="text"
-        id="responsibleIntern"
-        bind:value={responsibleIntern}
-      />
+    <label class="input-small" for="responsibleIntern"
+      >Resp.
+      <input type="text" id="responsibleIntern" bind:value={responsibleIntern} />
     </label>
-    <label for="responsibleExtern"
-      >Resp.ext.
-      <input
-        class="input-small"
-        type="text"
-        id="responsibleExtern"
-        bind:value={responsibleExtern}
-      />
+    <label class="input-small" for="responsibleExtern"
+      >Ext.
+      <input type="text" id="responsibleExtern" bind:value={responsibleExtern} />
     </label>
     <label
       >Due:
@@ -93,12 +83,12 @@
       >Added:
       <input type="date" bind:value={dateAdded} />
     </label>
-    <label for="note"
+    <label class="input-wide" for="note"
       >Note:
-      <input class="input-wide" type="text" id="note" bind:value={note} placeholder="add notes" />
+      <input type="text" id="note" bind:value={note} placeholder="add notes" />
     </label>
   </div>
-  <button class="submit" type="submit">Add task</button>
+  <button type="submit">Add task</button>
 </form>
 
 <style>
@@ -129,9 +119,19 @@
     min-width: 50ch;
   }
   .input-small {
-    max-width: 6ch;
+    max-width: 12ch;
   }
-  button.submit {
+
+  button {
+    padding: 0.4em 1em;
     margin-top: 0.5rem;
+    background-color: cornflowerblue;
+    color: white;
+    border: none;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  }
+  button:hover {
+    cursor: pointer;
+    opacity: 0.8;
   }
 </style>

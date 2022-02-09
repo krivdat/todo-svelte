@@ -77,7 +77,7 @@
 
       alert('Could not add new todo');
     } catch (error) {
-      return new Error('Could add new todo');
+      return new Error('Could not add new todo');
     }
   }
 
@@ -145,7 +145,7 @@
   <title>Todo List</title>
 </svelte:head>
 
-<h1>Task manager</h1>
+<h1>Task manager - {list}</h1>
 
 <InputForm on:submit={handleSubmit} />
 
@@ -195,6 +195,7 @@
   li {
     padding: 0.4rem;
     background-color: beige;
+    border-radius: 5px;
   }
 
   li.completed {
@@ -204,5 +205,13 @@
 
   li:not(:last-child) {
     margin-bottom: 0.3rem;
+  }
+
+  button {
+    padding: 0.3em 1em;
+    margin-top: 0.5rem;
+  }
+  button:hover {
+    cursor: pointer;
   }
 </style>
