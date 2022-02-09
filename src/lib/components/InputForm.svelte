@@ -57,23 +57,33 @@
 <!-- Input form -->
 <form on:submit|preventDefault={handleSubmit}>
   <div class="form-group">
-    <label class="form-input-wide"
+    <label
       >Task:
-      <input type="text" bind:value={task} placeholder="enter new task description" />
+      <input class="input-wide" type="text" bind:value={task} />
     </label>
   </div>
   <div class="form-group">
     <label for="subject"
-      >Subject
-      <input type="text" id="subject" bind:value={subject} placeholder="enter task subject" />
+      >Category
+      <input type="text" id="subject" bind:value={subject} />
     </label>
-    <label for="responsibleIntern" class="form-input-small"
+    <label for="responsibleIntern"
       >Resp.int.
-      <input type="text" id="responsibleIntern" bind:value={responsibleIntern} />
+      <input
+        class="input-small"
+        type="text"
+        id="responsibleIntern"
+        bind:value={responsibleIntern}
+      />
     </label>
-    <label for="responsibleExtern" class="form-input-small"
+    <label for="responsibleExtern"
       >Resp.ext.
-      <input type="text" id="responsibleExtern" bind:value={responsibleExtern} />
+      <input
+        class="input-small"
+        type="text"
+        id="responsibleExtern"
+        bind:value={responsibleExtern}
+      />
     </label>
     <label
       >Due:
@@ -83,9 +93,9 @@
       >Added:
       <input type="date" bind:value={dateAdded} />
     </label>
-    <label class="form-input-wide" for="note"
+    <label for="note"
       >Note:
-      <input type="text" id="note" bind:value={note} placeholder="add notes" />
+      <input class="input-wide" type="text" id="note" bind:value={note} placeholder="add notes" />
     </label>
   </div>
   <button class="submit" type="submit">Add task</button>
@@ -103,21 +113,23 @@
     gap: 1rem;
     margin-bottom: 0.5em;
   }
+  .form-group > * {
+    flex-grow: 1;
+  }
   label {
-    display: inline-block;
-    font-size: small;
+    display: flex;
+    flex-direction: column;
+    font-size: smaller;
   }
   input {
     height: 1.5em;
-    width: 100%;
+    padding: 0.1em 0.5em;
   }
-  .form-input-wide {
-    min-width: 40ch;
-    flex-grow: 1;
+  .input-wide {
+    min-width: 50ch;
   }
-  .form-input-small {
-    max-width: 8ch;
-    flex-grow: 0;
+  .input-small {
+    max-width: 6ch;
   }
   button.submit {
     margin-top: 0.5rem;

@@ -6,9 +6,9 @@ export async function get({ url }) {
   try {
     const dbConnection = await clientPromise;
     const db = dbConnection.db();
+
     const collections = await db.listCollections().toArray();
     const collectionNames = collections.map((item) => item.name);
-    console.log({ collectionNames });
     if (!collectionNames.includes(list)) {
       console.log(`Collection ${list} does not exist`);
       return {
@@ -42,6 +42,17 @@ export async function post({ request, url }) {
   try {
     const dbConnection = await clientPromise;
     const db = dbConnection.db();
+
+    const collections = await db.listCollections().toArray();
+    const collectionNames = collections.map((item) => item.name);
+    if (!collectionNames.includes(list)) {
+      console.log(`Collection ${list} does not exist`);
+      return {
+        status: 400,
+        error: new Error('Requested todo list does not exist')
+      };
+    }
+
     const collection = db.collection(list);
     const { insertedId } = await collection.insertOne(todo);
     return {
@@ -65,6 +76,17 @@ export async function put({ request, url }) {
   try {
     const dbConnection = await clientPromise;
     const db = dbConnection.db();
+
+    const collections = await db.listCollections().toArray();
+    const collectionNames = collections.map((item) => item.name);
+    if (!collectionNames.includes(list)) {
+      console.log(`Collection ${list} does not exist`);
+      return {
+        status: 400,
+        error: new Error('Requested todo list does not exist')
+      };
+    }
+
     const collection = db.collection(list);
     const { modifiedCount } = await collection.updateOne({ _id: ObjectId(id) }, { $set: change });
     return {
@@ -89,13 +111,24 @@ export async function del({ request, url }) {
   try {
     const dbConnection = await clientPromise;
     const db = dbConnection.db();
+
+    const collections = await db.listCollections().toArray();
+    const collectionNames = collections.map((item) => item.name);
+    if (!collectionNames.includes(list)) {
+      console.log(`Collection ${list} does not exist`);
+      return {
+        status: 400,
+        error: new Error('Requested todo list does not exist')
+      };
+    }
+
     const collection = db.collection(list);
     const result = await collection.deleteOne({ _id: ObjectId(id) });
 
     return {
       status: 200,
       body: {
-        message: 'todo deleted successfully'
+        message: `${result.deletedCount} todo(s) deleted successfully`
       }
     };
   } catch (error) {
