@@ -16,16 +16,19 @@
 </script>
 
 <div class="group">
-  <div>{todo.subject}:</div>
   <div class="task">{todo.task}</div>
+  <div>({todo.subject})</div>
 </div>
 
 <div class="group">
-  <div>resp.int. <strong>{todo.responsibleIntern}</strong></div>
-  <div>resp.ext. <strong>{todo.responsibleExtern}</strong></div>
+  <div>{todo.responsibleIntern}</div>
+  <div>/</div>
+  <div>{todo.responsibleExtern}</div>
   <div class="status">
     {#if todo.completed}
       completed
+    {:else if Date.parse(todo.dateDue) < Date.now()}
+      <span class="overdue">overdue</span>
     {:else}
       pending
     {/if}
@@ -34,7 +37,7 @@
 </div>
 
 <div class="group">
-  <div class="notes">note: {todo.note}</div>
+  <div class="notes">{todo.note}</div>
   <button class="btn-danger" type="button" on:click={handleDeleteClick}>Delete</button>
   <button
     class="btn-action"
@@ -67,6 +70,10 @@
   .completed {
     background-color: green;
     color: beige;
+  }
+  .overdue {
+    color: red;
+    font-weight: 600;
   }
 
   button {

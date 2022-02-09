@@ -16,6 +16,8 @@
     responsibleExtern = '';
     responsibleIntern = '';
     note = '';
+    dateAdded = '';
+    dateDue = '';
   };
 
   const handleSubmit = () => {
@@ -58,7 +60,7 @@
 <form on:submit|preventDefault={handleSubmit}>
   <div class="form-group">
     <label class="input-wide"
-      >Task:
+      >Task
       <input type="text" bind:value={task} />
     </label>
   </div>
@@ -76,11 +78,11 @@
       <input type="text" id="responsibleExtern" bind:value={responsibleExtern} />
     </label>
     <label
-      >Due:
+      >Due date (default today)
       <input type="date" bind:value={dateDue} />
     </label>
     <label
-      >Added:
+      >Added (default today):
       <input type="date" bind:value={dateAdded} />
     </label>
     <label class="input-wide" for="note"
@@ -125,7 +127,7 @@
   button {
     padding: 0.4em 1em;
     margin-top: 0.5rem;
-    background-color: cornflowerblue;
+    background-color: rgba(150, 138, 123, 1);
     color: white;
     border: none;
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);

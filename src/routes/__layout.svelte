@@ -10,8 +10,10 @@
 <header>
   <nav>
     <ul>
-      <li><a href="/">Home</a></li>
-      <li><a href="/todos">Default list</a></li>
+      <a href="/"><li>Home</li></a>
+      <!-- <li><a href="/todos">Default list</a></li> -->
+      <a href="/R5-bistro"><li>R5 Deli Bistro</li></a>
+      <a href="/R6-concierge"><li>R6 Concierge</li></a>
     </ul>
   </nav>
 </header>

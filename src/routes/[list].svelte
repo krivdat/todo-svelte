@@ -36,7 +36,9 @@
   $: totalTodos = todos.length;
   $: totalTodosFiltered = todosFiltered.length;
   $: completedTodos = todos.filter((todo) => todo.completed).length;
-  $: overdueTodos = todos.filter((todo) => todo.status == 'overdue').length;
+  $: overdueTodos = todos.filter(
+    (todo) => Date.parse(todo.dateDue) < Date.now() && !todo.completed
+  ).length;
 
   async function fetchTodos() {
     try {
@@ -52,6 +54,9 @@
   }
 
   function filterTodos(list, rules) {
+    if (rules.overdue) {
+      return list.filter((todo) => Date.parse(todo.dateDue) < Date.now() && !todo.completed);
+    }
     return list.filter((todo) => {
       for (let key in rules) {
         if (todo[key] === undefined || todo[key] != rules[key]) return false;
@@ -137,7 +142,10 @@
 
   function showPending() {
     filterRules = { completed: false };
-    // console.log({ todosFiltered, todos });
+  }
+
+  function showOverdue() {
+    filterRules = { overdue: true };
   }
 </script>
 
@@ -153,7 +161,7 @@
 <div class="filters">
   <button on:click={showAll}>All</button>
   <button on:click={showPending}>Pending</button>
-  <button>Overdue</button>
+  <button on:click={showOverdue}>Overdue</button>
   <button on:click={showCompleted}>Completed</button>
 </div>
 
@@ -180,8 +188,8 @@
 
 <!-- More Actions -->
 <div>
-  <button type="button">Check all</button>
-  <button type="button">Remove completed</button>
+  <!-- <button type="button">Check all</button> -->
+  <!-- <button type="button">Remove completed</button> -->
 </div>
 
 <style>
