@@ -14,6 +14,7 @@
       <!-- <li><a href="/todos">Default list</a></li> -->
       <a href="/R5-bistro"><li>R5 Deli Bistro</li></a>
       <a href="/R6-concierge"><li>R6 Concierge</li></a>
+      <a href="/R8-show-flat"><li>R8 Show Appartment</li></a>
     </ul>
   </nav>
 </header>
@@ -46,6 +47,7 @@
   nav {
     background-color: #222;
     color: azure;
+    font-size: 0.9rem;
   }
   nav ul {
     display: flex;
