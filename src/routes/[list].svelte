@@ -32,13 +32,18 @@
   import InputForm from '$lib/components/InputForm.svelte';
 
   let filterRules = {};
-  $: todosFiltered = filterTodos(todos, filterRules);
+  let respIntSelected = '';
+  let respExtSelected = '';
+
+  $: todosFiltered = filterTodos(todos, filterRules, respIntSelected, respExtSelected);
   $: totalTodos = todos.length;
   $: totalTodosFiltered = todosFiltered.length;
   $: completedTodos = todos.filter((todo) => todo.completed).length;
   $: overdueTodos = todos.filter(
     (todo) => Date.parse(todo.dateDue) < Date.now() && !todo.completed
   ).length;
+  $: respIntList = [...new Set(todos.map((todo) => todo.responsibleIntern))];
+  $: respExtList = [...new Set(todos.map((todo) => todo.responsibleExtern))];
 
   async function fetchTodos() {
     try {
@@ -53,16 +58,30 @@
     }
   }
 
-  function filterTodos(list, rules) {
+  function filterTodos(list, rules, respInt, respExt) {
+    console.log('Inside filter function. ', { rules }, { respIntSelected }, { respExtSelected });
+    let result;
     if (rules.overdue) {
-      return list.filter((todo) => Date.parse(todo.dateDue) < Date.now() && !todo.completed);
+      result = list.filter((todo) => Date.parse(todo.dateDue) < Date.now() && !todo.completed);
+    } else if (rules) {
+      result = list.filter((todo) => {
+        for (let key in rules) {
+          if (todo[key] === undefined || todo[key] != rules[key]) return false;
+        }
+        return true;
+      });
     }
-    return list.filter((todo) => {
-      for (let key in rules) {
-        if (todo[key] === undefined || todo[key] != rules[key]) return false;
+    result = result.filter((todo) => {
+      if (
+        (respInt != '' && todo.responsibleIntern != respInt) ||
+        (respExt != '' && todo.responsibleExtern != respExt)
+      ) {
+        return false;
       }
       return true;
     });
+
+    return result;
   }
 
   async function handleSubmit(e) {
@@ -159,11 +178,34 @@
   <InputForm on:submit={handleSubmit} />
 
   <!-- Filter -->
-  <div class="filters">
-    <button on:click={showAll}>All</button>
-    <button on:click={showPending}>Pending</button>
-    <button on:click={showOverdue}>Overdue</button>
-    <button on:click={showCompleted}>Completed</button>
+
+  <div class="container">
+    <div class="filters">
+      <button on:click={showAll}>All</button>
+      <button on:click={showPending}>Pending</button>
+      <button on:click={showOverdue}>Overdue</button>
+      <button on:click={showCompleted}>Completed</button>
+    </div>
+    <div class="filters">
+      <label for="filterRespInt"
+        ><span>resp.int.</span>
+        <select name="filterRespInt" id="filterRespInt" bind:value={respIntSelected}>
+          <option value="">all</option>
+          {#each respIntList as person}
+            <option value={person}>{person}</option>
+          {/each}
+        </select>
+      </label>
+      <label for="filterRespExt"
+        ><span>resp.ext.</span>
+        <select name="filterRespExt" id="filterRespExt" bind:value={respExtSelected}>
+          <option value="">all</option>
+          {#each respExtList as person}
+            <option value={person}>{person}</option>
+          {/each}
+        </select>
+      </label>
+    </div>
   </div>
 
   <!-- Todos status -->
@@ -231,13 +273,37 @@
   }
 
   button {
-    padding: 0.3em 1em;
+    font-size: smaller;
+    padding: 0.4em 1em;
     margin-top: 0.5rem;
+    background-color: #eee;
+    border: 1px solid black;
+    border-radius: 3px;
   }
   button:hover {
     cursor: pointer;
   }
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
   .filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 1.2em;
+    font-size: smaller;
+    gap: 0.5em;
+  }
+  .filters label {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .filters select {
+    width: 10ch;
+    background-color: #eee;
   }
 </style>
