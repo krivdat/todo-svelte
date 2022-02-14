@@ -34,6 +34,7 @@
   let filterRules = {};
   let respIntSelected = '';
   let respExtSelected = '';
+  let showInputForm = true;
 
   $: todosFiltered = filterTodos(todos, filterRules, respIntSelected, respExtSelected);
   $: totalTodos = todos.length;
@@ -163,6 +164,17 @@
     filterRules = { completed: false };
   }
 
+  function showDueToday() {
+    const date = new Date();
+    const today =
+      date.getFullYear() +
+      '-' +
+      (date.getMonth() > 8 ? date.getMonth() + 1 : '0' + (date.getMonth() + 1)) +
+      '-' +
+      (date.getDate() > 9 ? date.getDate() : '0' + date.getDate());
+    filterRules = { dateDue: today };
+  }
+
   function showOverdue() {
     filterRules = { overdue: true };
   }
@@ -173,9 +185,15 @@
 </svelte:head>
 
 <section class="input-and-filters">
-  <h1>Task manager - {list}</h1>
-
-  <InputForm on:submit={handleSubmit} />
+  <div class="top-title">
+    <h1>Task manager - {list}</h1>
+    <button on:click={() => (showInputForm = !showInputForm)} title="show/hide input form"
+      >▲ ▼</button
+    >
+  </div>
+  <div class="input-form" class:hidden={!showInputForm}>
+    <InputForm on:submit={handleSubmit} />
+  </div>
 
   <!-- Filter -->
 
@@ -183,6 +201,7 @@
     <div class="filters">
       <button on:click={showAll}>All</button>
       <button on:click={showPending}>Pending</button>
+      <button on:click={showDueToday}>Due today</button>
       <button on:click={showOverdue}>Overdue</button>
       <button on:click={showCompleted}>Completed</button>
     </div>
@@ -305,5 +324,17 @@
   .filters select {
     width: 10ch;
     background-color: #eee;
+  }
+  .top-title {
+    display: flex;
+    justify-content: space-between;
+  }
+  .top-title button {
+    font-size: 10px;
+    line-height: 10px;
+    height: 20px;
+  }
+  .hidden {
+    display: none;
   }
 </style>
