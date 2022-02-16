@@ -5,7 +5,7 @@
       const res = await fetch(`/api/todos.json?list=${list}`);
       const { todos } = await res.json();
       if (res.ok) {
-        // console.log({ todos });
+        todos.sort((a, b) => new Date(a.dateDue) - new Date(b.dateDue));
         return {
           props: { todos, list }
         };
@@ -52,7 +52,8 @@
       const data = await res.json();
 
       if (res.ok) {
-        todos = data.todos;
+        const unsortedTodos = data.todos;
+        todos = unsortedTodos.sort((a, b) => new Date(a.dateDue) - new Date(b.dateDue));
       }
     } catch (error) {
       return new Error('Could not fetch list of todos');
@@ -191,9 +192,10 @@
       >▲ ▼</button
     >
   </div>
-  <div class="input-form" class:hidden={!showInputForm}>
+
+  {#if showInputForm}
     <InputForm on:submit={handleSubmit} />
-  </div>
+  {/if}
 
   <!-- Filter -->
 
