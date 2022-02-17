@@ -27,7 +27,7 @@
 <script>
   export let todos;
   export let list;
-  import { fade } from 'svelte/transition';
+  import { fade, slide } from 'svelte/transition';
   import Todo from '$lib/components/Todo.svelte';
   import InputForm from '$lib/components/InputForm.svelte';
 
@@ -194,7 +194,9 @@
   </div>
 
   {#if showInputForm}
-    <InputForm on:submit={handleSubmit} />
+    <div transition:slide>
+      <InputForm on:submit={handleSubmit} />
+    </div>
   {/if}
 
   <!-- Filter -->
@@ -335,8 +337,5 @@
     font-size: 10px;
     line-height: 10px;
     height: 20px;
-  }
-  .hidden {
-    display: none;
   }
 </style>
