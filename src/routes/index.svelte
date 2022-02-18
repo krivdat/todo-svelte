@@ -1,9 +1,10 @@
 <h1>Todo Lists</h1>
 
 <section class="todos">
-  <a href="/R5-bistro"><div>R5 - Deli Bistro fitout</div></a>
-  <a href="/R6-concierge"><div>R6 - Concierge fitout</div></a>
+  <a href="/R5-bistro"><div>R5 Deli Bistro fitout</div></a>
+  <a href="/R6-concierge"><div>R6 Concierge fitout</div></a>
   <a href="/R8-show-flat"><div>R8 Show Appartment</div></a>
+  <a href="/P12-spira"><div>P12 Spira</div></a>
 </section>
 
 <style>

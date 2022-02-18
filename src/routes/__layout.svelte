@@ -15,6 +15,7 @@
       <a href="/R5-bistro"><li>R5 Deli Bistro</li></a>
       <a href="/R6-concierge"><li>R6 Concierge</li></a>
       <a href="/R8-show-flat"><li>R8 Show Appartment</li></a>
+      <a href="/P12-spira"><li>P12 Spira</li></a>
     </ul>
   </nav>
 </header>
