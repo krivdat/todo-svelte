@@ -1,12 +1,38 @@
-<h1>Todo Lists</h1>
+<script context="module">
+  export async function load({ session }) {
+    if (!session?.user) {
+      return {
+        status: 302,
+        redirect: '/sign-in'
+      };
+    }
+    return {
+      props: {
+        user: session.user
+      }
+    };
+  }
+</script>
 
-<section class="todos">
-  <a href="/R5-bistro"><div>R5 - Deli Bistro fitout</div></a>
+<script>
+  export let user;
+</script>
+
+<h1>Todo Lists</h1>
+<div class="welcome">
+  <p>Welcome, {user.email}</p>
+</div>
+
+<!-- <section class="todos">
+  <a href="/R5-bistro"><div>R5 - Bistro fitout</div></a>
   <a href="/R6-concierge"><div>R6 - Concierge fitout</div></a>
   <a href="/R8-show-flat"><div>R8 Show Appartment</div></a>
-</section>
-
+</section> -->
 <style>
+  .welcome {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
   h1 {
     text-align: center;
   }
