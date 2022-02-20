@@ -10,7 +10,7 @@ export async function get({ url }) {
     const collections = await db.listCollections().toArray();
     const collectionNames = collections.map((item) => item.name);
     if (!collectionNames.includes(list)) {
-      console.log(`Collection ${list} does not exist`);
+      // console.log(`Collection ${list} does not exist`);
       return {
         status: 400,
         error: new Error('Requested todo list does not exist')
@@ -27,7 +27,7 @@ export async function get({ url }) {
       }
     };
   } catch (error) {
-    console.log({ error });
+    // console.log({ error });
     return {
       status: 500,
       error: new Error('Error while getting todos from database')
@@ -46,7 +46,7 @@ export async function post({ request, url }) {
     const collections = await db.listCollections().toArray();
     const collectionNames = collections.map((item) => item.name);
     if (!collectionNames.includes(list)) {
-      console.log(`Collection ${list} does not exist`);
+      // console.log(`Collection ${list} does not exist`);
       return {
         status: 400,
         error: new Error('Requested todo list does not exist')
@@ -80,7 +80,7 @@ export async function put({ request, url }) {
     const collections = await db.listCollections().toArray();
     const collectionNames = collections.map((item) => item.name);
     if (!collectionNames.includes(list)) {
-      console.log(`Collection ${list} does not exist`);
+      // console.log(`Collection ${list} does not exist`);
       return {
         status: 400,
         error: new Error('Requested todo list does not exist')
@@ -96,7 +96,7 @@ export async function put({ request, url }) {
       }
     };
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return {
       status: 500,
       error: new Error('Error during storing new item to database')
@@ -115,7 +115,7 @@ export async function del({ request, url }) {
     const collections = await db.listCollections().toArray();
     const collectionNames = collections.map((item) => item.name);
     if (!collectionNames.includes(list)) {
-      console.log(`Collection ${list} does not exist`);
+      // console.log(`Collection ${list} does not exist`);
       return {
         status: 400,
         error: new Error('Requested todo list does not exist')

@@ -13,25 +13,6 @@
     // }
   ];
 
-  const todoLists = [
-    {
-      title: 'R5 - Bistro fitout',
-      listName: 'R5-bistro'
-    },
-    {
-      title: 'R6 - Concierge fitout',
-      listName: 'R6-concierge'
-    },
-    {
-      title: 'R8 - Show Appartment',
-      listName: 'R8-show-flat'
-    },
-    {
-      title: 'P12 - Spira/Wine Cellar',
-      listName: 'P12-spira'
-    }
-  ];
-
   async function handleSignOut() {
     await fetch('/api/sign-out.json');
     $session = {};
@@ -52,8 +33,8 @@
   <div class="navigation-lists">
     <ul>
       {#if $session.user}
-        {#each todoLists as list}
-          <a href="/{list.listName}"><li>{list.title}</li></a>
+        {#each $session.user.projects as list}
+          <a href="/{list}"><li>{list}</li></a>
         {/each}
         <li on:click={handleSignOut}>Sign out</li>
       {:else}

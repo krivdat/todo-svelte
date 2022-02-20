@@ -3,7 +3,7 @@ import { serialize } from 'cookie';
 
 /** @type {import('@sveltejs/kit').RequestHandler} */
 export async function post({ request }) {
-  const { email, password } = await request.json();
+  const { fullName, initials, projects, isAdmin, email, password } = await request.json();
   const user = await getUserByEmail(email);
 
   if (user) {
@@ -17,6 +17,10 @@ export async function post({ request }) {
 
   // ⚠️ CAUTION: Do not store a plain password like this. Use proper hashing and salting.
   await registerUser({
+    fullName,
+    initials,
+    projects,
+    isAdmin,
     email,
     password
   });

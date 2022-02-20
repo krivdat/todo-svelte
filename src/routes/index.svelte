@@ -16,11 +16,19 @@
 
 <script>
   export let user;
+  console.log('in index.svelte', { user });
 </script>
 
 <h1>Todo Lists</h1>
 <div class="welcome">
-  <p>Welcome, {user.email}</p>
+  <p>Welcome, {user.fullName ? user.fullName : 'stranger'}!</p>
+  <ul>
+    <li>Initials: {user.initials ? user.initials : ''}</li>
+    <li>Projects: {user.projects ? user.projects : 'you have no projects assigned'}</li>
+    <li>{user.isAdmin ? 'You are admin' : 'You are not admin'}</li>
+    <li>E-mail: {user.email}</li>
+    <li />
+  </ul>
 </div>
 
 <!-- <section class="todos">

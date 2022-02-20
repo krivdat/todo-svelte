@@ -46,7 +46,7 @@ export const createSession = async (email) => {
 };
 
 export const getSession = async (id) => {
-  console.log('in auth-db-utils: ', { id });
+  // console.log('in auth-db-utils: ', { id });
   if (id == 'undefined') {
     return Promise.resolve(null);
   }

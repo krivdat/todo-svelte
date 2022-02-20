@@ -6,7 +6,7 @@ export async function post({ request }) {
   const { email, password } = await request.json();
   const user = await getUserByEmail(email);
 
-  console.log('Inside sign-in.json', { user });
+  // console.log('Inside sign-in.json', { user });
   // ⚠️ CAUTION: Do not store a plain passwords. Use proper hashing and salting.
   if (!user || user.password !== password) {
     return {
