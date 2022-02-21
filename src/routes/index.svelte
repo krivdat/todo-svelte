@@ -24,7 +24,16 @@
   <p>Welcome, {user.fullName ? user.fullName : 'stranger'}!</p>
   <ul>
     <li>Initials: {user.initials ? user.initials : ''}</li>
-    <li>Projects: {user.projects ? user.projects : 'you have no projects assigned'}</li>
+    <li>
+      Projects:
+      {#if user.projects.length > 0}
+        {#each user.projects as project}
+          <span>{project} </span>
+        {/each}
+      {:else}
+        <span>you have no projects assigned</span>
+      {/if}
+    </li>
     <li>{user.isAdmin ? 'You are admin' : 'You are not admin'}</li>
     <li>E-mail: {user.email}</li>
     <li />
