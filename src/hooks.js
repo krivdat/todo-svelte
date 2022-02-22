@@ -10,7 +10,7 @@ export async function handle({ event, resolve }) {
     const session = await getSessionFromApi(cookies.session_id);
     if (session) {
       const user = await getUserByEmail(session.email);
-      console.log('in hooks.js ', { user });
+      // console.log('in hooks.js ', { user });
       event.locals.user = {
         fullName: user.fullName,
         initials: user.initials,
@@ -34,7 +34,7 @@ export function getSession(event) {
           fullName: event.locals.user.fullName,
           initials: event.locals.user.initials,
           projects: event.locals.user.projects,
-          iaAdmin: event.locals.user.isAdmin,
+          isAdmin: event.locals.user.isAdmin,
           email: event.locals.user.email
         }
       }
