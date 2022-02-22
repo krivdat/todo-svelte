@@ -1,5 +1,12 @@
 <script context="module">
-  export async function load({ fetch, params }) {
+  export async function load({ fetch, params, session }) {
+    if (!session?.user) {
+      return {
+        status: 302,
+        redirect: '/sign-in'
+      };
+    }
+
     const list = params.list;
     try {
       const res = await fetch(`/api/todos.json?list=${list}`);
@@ -7,7 +14,7 @@
       if (res.ok) {
         todos.sort((a, b) => new Date(a.dateDue) - new Date(b.dateDue));
         return {
-          props: { todos, list }
+          props: { todos, list, user: session.user }
         };
       }
 

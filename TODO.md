@@ -7,7 +7,10 @@
 - [x] add option to filter only todos due today
 - [ ] add option to filter todos due within next 7 days
 - [x] sort todos by due date (closest date on top)
-- [ ] add authentication: users with different access rights for every todo list (view only, view+edit, no access) 
+- [ ] authentication
+  - [x] add users sign-up, sign-in and sign-out features
+  - [ ] implement different access rights for every todo list (view only, view+edit, no access)
+  - [ ] add password hashing (currently plain-text passwords)
 
 ## Formatting, minor tweaks
 

@@ -21,6 +21,7 @@
   },
   "type": "module",
   "dependencies": {
+    "cookie": "^0.4.2",
     "mongodb": "^4.3.1"
   }
 }

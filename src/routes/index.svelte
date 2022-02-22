@@ -1,21 +1,58 @@
-<h1>Todo Lists</h1>
+<script context="module">
+  export async function load({ session }) {
+    if (!session?.user) {
+      return {
+        status: 302,
+        redirect: '/sign-in'
+      };
+    }
+    return {
+      props: {
+        user: session.user
+      }
+    };
+  }
+</script>
 
-<section class="todos">
-  <a href="/R5-bistro"><div>R5 Deli Bistro fitout</div></a>
-  <a href="/R6-concierge"><div>R6 Concierge fitout</div></a>
-  <a href="/R8-show-flat"><div>R8 Show Appartment</div></a>
-  <a href="/P12-spira"><div>P12 Spira</div></a>
+<script>
+  export let user;
+  console.log('in index.svelte', { user });
+</script>
+
+<h1>Todo Lists</h1>
+<section class="welcome">
+  <p>Welcome, {user.fullName ? user.fullName : 'stranger'}!</p>
+  <div class="user-summary">
+    <p>Initials: {user.initials ? user.initials : ''}</p>
+    <p>{user.isAdmin ? 'You are admin' : 'You are not admin'}</p>
+    <p>E-mail: {user.email}</p>
+  </div>
+
+  <div class="projects">
+    <h2>Your projects</h2>
+    {#if user.projects.length > 0}
+      {#each user.projects as project}
+        <div class="project"><a href="/{project}">{project}</a></div>
+      {/each}
+    {:else}
+      <span>you have no projects assigned</span>
+    {/if}
+  </div>
 </section>
 
 <style>
   h1 {
     text-align: center;
   }
-  .todos {
+  .welcome {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+  .projects {
     max-width: 300px;
     margin: 2em auto 4em auto;
   }
-  .todos div {
+  .project {
     padding: 1em;
     margin: 0.5em 0;
     border: 1px solid black;
@@ -23,17 +60,14 @@
     text-align: center;
     box-shadow: 1px 1px 5px rgba(83, 82, 82, 50%);
   }
-  .todos div:hover {
+  .project:hover {
     background-color: rgba(150, 138, 123, 1);
+    color: white;
+    cursor: pointer;
   }
-  .todos a {
+  .projects a,
+  .projects a:visited {
     text-decoration: none;
     color: inherit;
-  }
-  .todos a:visited {
-    color: inherit;
-  }
-  .todos a:hover {
-    color: white;
   }
 </style>
