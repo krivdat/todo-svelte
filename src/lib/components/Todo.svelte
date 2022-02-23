@@ -24,23 +24,20 @@
   <div>{todo.responsibleIntern}</div>
   <div>/</div>
   <div>{todo.responsibleExtern}</div>
-  <div class="status">
-    {#if todo.completed}
-      completed
-    {:else if Date.parse(todo.dateDue) < Date.now()}
-      <span class="overdue">overdue</span>
+  <div class="right">
+    {#if Date.parse(todo.dateDue) < Date.now()}
+      <span class="overdue">{todo.dateDue}</span>
     {:else}
-      pending
+      <span class="pending">{todo.dateDue}</span>
     {/if}
   </div>
-  <div>{todo.dateDue}</div>
 </div>
 
 <div class="group">
   <div class="notes">{todo.note}</div>
-  <button class="btn-danger" type="button" on:click={handleDeleteClick}>Delete</button>
+  <i class="far fa-trash-alt icon-danger right" aria-hidden="true" on:click={handleDeleteClick} />
   <button
-    class="btn-action"
+    class="btn-done"
     type="button"
     class:completed={todo.completed}
     on:click={handleCompleteClick}
@@ -58,8 +55,7 @@
     font-size: small;
     margin-bottom: 0.2em;
   }
-  .status,
-  .btn-danger {
+  .right {
     margin-left: auto;
   }
   .task {
@@ -71,9 +67,15 @@
     background-color: green;
     color: beige;
   }
+  .pending {
+    /* color: red; */
+  }
   .overdue {
-    color: red;
+    color: ghostwhite;
+    background-color: red;
     font-weight: 600;
+    padding: 0 3px;
+    border-radius: 3px;
   }
 
   button {
@@ -89,15 +91,29 @@
   }
   button:hover {
     cursor: pointer;
-    opacity: 1;
+    opacity: 0.8;
   }
 
-  .btn-danger {
-    background-color: red;
-    color: white;
+  .btn-done {
+    color: black;
+    border: 1px solid black;
+    opacity: 1;
+    background-color: transparent;
+    padding: 0.1em 0.4em;
+    margin-top: 3px;
   }
-  .btn-action {
+  .btn-done:hover {
     background-color: green;
     color: white;
+  }
+
+  i {
+    cursor: pointer;
+  }
+  i:hover {
+    opacity: 0.8;
+  }
+  .icon-danger:hover {
+    color: red;
   }
 </style>

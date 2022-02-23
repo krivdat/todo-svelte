@@ -32,7 +32,7 @@
     <h2>Your projects</h2>
     {#if user.projects.length > 0}
       {#each user.projects as project}
-        <div class="project"><a href="/{project}">{project}</a></div>
+        <a href="/{project}"><div class="project">{project}</div></a>
       {/each}
     {:else}
       <span>you have no projects assigned</span>

@@ -12,9 +12,13 @@
       const res = await fetch(`/api/todos.json?list=${list}`);
       const { todos } = await res.json();
       if (res.ok) {
-        todos.sort((a, b) => new Date(a.dateDue) - new Date(b.dateDue));
+        const completedList = todos.filter((item) => item.completed);
+        const uncompletedList = todos.filter((item) => !item.completed);
+        uncompletedList.sort((a, b) => new Date(a.dateDue) - new Date(b.dateDue));
+        completedList.sort((a, b) => new Date(a.dateDue) - new Date(b.dateDue));
+        const sortedList = [...uncompletedList, ...completedList];
         return {
-          props: { todos, list, user: session.user }
+          props: { todos: sortedList, list, user: session.user }
         };
       }
 
@@ -59,8 +63,11 @@
       const data = await res.json();
 
       if (res.ok) {
-        const unsortedTodos = data.todos;
-        todos = unsortedTodos.sort((a, b) => new Date(a.dateDue) - new Date(b.dateDue));
+        const completedList = data.todos.filter((item) => item.completed);
+        const uncompletedList = data.todos.filter((item) => !item.completed);
+        uncompletedList.sort((a, b) => new Date(a.dateDue) - new Date(b.dateDue));
+        completedList.sort((a, b) => new Date(a.dateDue) - new Date(b.dateDue));
+        todos = [...uncompletedList, ...completedList];
       }
     } catch (error) {
       return new Error('Could not fetch list of todos');
@@ -68,7 +75,7 @@
   }
 
   function filterTodos(list, rules, respInt, respExt) {
-    console.log('Inside filter function. ', { rules }, { respIntSelected }, { respExtSelected });
+    // console.log('Inside filter function. ', { rules }, { respIntSelected }, { respExtSelected });
     let result;
     if (rules.overdue) {
       result = list.filter((todo) => Date.parse(todo.dateDue) < Date.now() && !todo.completed);
@@ -195,9 +202,13 @@
 <section class="input-and-filters">
   <div class="top-title">
     <h1>Task manager - {list}</h1>
-    <button on:click={() => (showInputForm = !showInputForm)} title="show/hide input form"
-      >▲ ▼</button
-    >
+    <button on:click={() => (showInputForm = !showInputForm)} title="show/hide input form">
+      {#if showInputForm}
+        ▲
+      {:else}
+        ▼
+      {/if}
+    </button>
   </div>
 
   {#if showInputForm}
@@ -294,8 +305,9 @@
   }
 
   li.completed {
-    background-color: rgb(225, 230, 236);
-    color: rgb(107, 107, 107);
+    /* background-color: rgb(225, 230, 236); */
+    /* color: rgb(107, 107, 107); */
+    opacity: 0.5;
   }
 
   li:not(:last-child) {
@@ -312,11 +324,15 @@
   }
   button:hover {
     cursor: pointer;
+    opacity: 0.8;
+  }
+  button:active {
+    box-shadow: inset 0 0 3px #666;
   }
   .container {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
     flex-wrap: wrap;
   }
   .filters {
