@@ -16,7 +16,7 @@
 
 <script>
   export let user;
-  console.log('in index.svelte', { user });
+  // console.log('in index.svelte', { user });
 </script>
 
 <h1>Todo Lists</h1>

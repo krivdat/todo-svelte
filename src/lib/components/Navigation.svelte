@@ -36,6 +36,7 @@
         {#each $session.user.projects as list}
           <a href="/{list}"><li>{list}</li></a>
         {/each}
+        <a href="/projects/add"><li>Add project</li></a>
         <li on:click={handleSignOut}>Sign out</li>
       {:else}
         <a href="/sign-in"><li>Sign in</li></a>
