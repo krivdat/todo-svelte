@@ -16,7 +16,7 @@
 
   function submit() {
     error = null;
-    shortTitle = shortTitle.filter((char) => !char == ''); // remove spaces
+    shortTitle = shortTitle.replace(/\s/g, ''); // remove all whitespace
     dispatch('submit', {
       shortTitle,
       fullTitle,

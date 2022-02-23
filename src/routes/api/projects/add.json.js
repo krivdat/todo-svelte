@@ -1,11 +1,10 @@
 import { getUserByEmail } from '$lib/auth-db-utils';
-import { addProject } from '$lib/projects-db-utils';
+import { addProject, updateUserProjects } from '$lib/projects-db-utils';
 
 /** @type {import('@sveltejs/kit').RequestHandler} */
 export async function post({ request }) {
   const { shortTitle, fullTitle, createdByEmail, accessPublic } = await request.json();
   const user = await getUserByEmail(createdByEmail);
-
   if (!user) {
     return {
       status: 409,
@@ -30,6 +29,8 @@ export async function post({ request }) {
       }
     };
   }
+
+  updateUserProjects(user.email, project.shortTitle);
 
   return {
     status: 200,
