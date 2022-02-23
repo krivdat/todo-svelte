@@ -39,9 +39,9 @@
         <li on:click={handleSignOut}>Sign out</li>
       {:else}
         <a href="/sign-in"><li>Sign in</li></a>
-        <!-- {#if $session.user.isAdmin}
-          <a href="/sign-up"><li>Sign up</li></a>
-        {/if} -->
+        <!-- {#if $session.user.isAdmin} -->
+        <a href="/sign-up"><li>Sign up</li></a>
+        <!-- {/if} -->
       {/if}
     </ul>
   </div>
