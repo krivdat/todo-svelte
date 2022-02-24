@@ -25,17 +25,23 @@ export async function post({ request }) {
     return {
       status: 409,
       body: {
-        message: 'Could not add new project'
+        message: 'Please choose different short title for the project'
       }
     };
   }
 
-  updateUserProjects(user.email, project.shortTitle);
-
+  if (await updateUserProjects(user.email, project.shortTitle)) {
+    return {
+      status: 200,
+      body: {
+        message: 'Successfully added new project'
+      }
+    };
+  }
   return {
-    status: 200,
+    status: 409,
     body: {
-      message: 'Successfully added new project'
+      message: 'User does not exist'
     }
   };
 }

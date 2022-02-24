@@ -5,8 +5,10 @@ export const addProject = async (project) => {
     const dbConnection = await clientPromise;
     const db = dbConnection.db();
     const collection = db.collection('projects');
+    // check if added project does not already exist
     const existingProject = await collection.findOne({ shortTitle: project.shortTitle });
-    if (existingProject) return Promise.reject(new Error('This project already exists'));
+    if (existingProject) return Promise.resolve(null);
+    // if not insert new db entry
     const { insertedId } = await collection.insertOne(project);
     project.id = insertedId.toHexString();
     await db.createCollection(project.shortTitle);
@@ -22,7 +24,7 @@ export const updateUserProjects = async (email, projectTitle) => {
     const db = dbConnection.db();
     const collection = db.collection('users');
     const existingUser = await collection.findOne({ email });
-    if (!existingUser) return Promise.reject(new Error('User does not exist'));
+    if (!existingUser) return Promise.resolve(null);
     const newProjects = [...existingUser.projects, projectTitle];
     const { modifiedCount } = await collection.updateOne(
       { email: email },

@@ -38,6 +38,7 @@
 <script>
   export let todos;
   export let list;
+  export let user;
   import { fade, slide } from 'svelte/transition';
   import Todo from '$lib/components/Todo.svelte';
   import InputForm from '$lib/components/InputForm.svelte';
