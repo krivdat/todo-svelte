@@ -37,7 +37,7 @@
           <a href="/{list}"><li>{list}</li></a>
         {/each}
         <a href="/projects/add"><li>Add project</li></a>
-        <li on:click={handleSignOut}>Sign out</li>
+        <a href="#"><li on:click={handleSignOut}>Sign out</li></a>
       {:else}
         <a href="/sign-in"><li>Sign in</li></a>
         <!-- {#if $session.user.isAdmin} -->
@@ -57,16 +57,23 @@
     color: azure;
     font-size: 0.9rem;
   }
+  nav > div {
+    height: 100%;
+  }
   nav ul {
     display: flex;
+    align-items: stretch;
+    height: 100%;
     list-style-type: none;
     margin: 0;
     padding: 0 1em;
   }
   nav ul li {
+    margin: 0;
     padding: 0.5em 0.5em;
   }
-  nav ul li:hover {
+  nav ul li:hover,
+  nav ul a:hover {
     background-color: rgba(150, 138, 123, 0.5);
     cursor: pointer;
   }
