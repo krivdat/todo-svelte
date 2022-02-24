@@ -21,65 +21,62 @@
 </script>
 
 <nav>
-  <div class="navigation-general">
-    <ul>
-      {#each navigation as link}
+  <ul class="navigation-general">
+    {#each navigation as link}
+      <li>
         <a href={link.href}>
-          <li>{link.name}</li>
+          {link.name}
         </a>
+      </li>
+    {/each}
+  </ul>
+  <ul class="navigation-lists">
+    {#if $session.user}
+      {#each $session.user.projects as list}
+        <li><a href="/{list}">{list}</a></li>
       {/each}
-    </ul>
-  </div>
-  <div class="navigation-lists">
-    <ul>
-      {#if $session.user}
-        {#each $session.user.projects as list}
-          <a href="/{list}"><li>{list}</li></a>
-        {/each}
-        <a href="/projects/add"><li>Add project</li></a>
-        <a href="#"><li on:click={handleSignOut}>Sign out</li></a>
-      {:else}
-        <a href="/sign-in"><li>Sign in</li></a>
-        <!-- {#if $session.user.isAdmin} -->
-        <a href="/sign-up"><li>Sign up</li></a>
-        <!-- {/if} -->
-      {/if}
-    </ul>
-  </div>
+      <li><a href="/projects/add">Add project</a></li>
+      <li><a href="#" on:click={handleSignOut}>Sign out</a></li>
+    {:else}
+      <li><a href="/sign-in">Sign in</a></li>
+      <!-- {#if $session.user.isAdmin} -->
+      <li><a href="/sign-up">Sign up</a></li>
+      <!-- {/if} -->
+    {/if}
+  </ul>
 </nav>
 
 <style>
   nav {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: stretch;
     background-color: #222;
     color: azure;
     font-size: 0.9rem;
   }
-  nav > div {
-    height: 100%;
-  }
-  nav ul {
+  nav > ul {
     display: flex;
     align-items: stretch;
-    height: 100%;
-    list-style-type: none;
     margin: 0;
-    padding: 0 1em;
+    padding: 0;
   }
-  nav ul li {
-    margin: 0;
-    padding: 0.5em 0.5em;
+  nav > ul li {
+    display: flex;
+    align-items: center;
+    padding: 0.3em 0.5em;
   }
-  nav ul li:hover,
-  nav ul a:hover {
+  nav > ul li:hover {
     background-color: rgba(150, 138, 123, 0.5);
-    cursor: pointer;
   }
-  nav a,
-  nav a:visited {
+  a {
     color: azure;
     text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  a:visited {
+    color: inherit;
   }
 </style>
