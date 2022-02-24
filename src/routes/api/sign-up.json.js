@@ -1,5 +1,6 @@
 import { createSession, getUserByEmail, registerUser } from '$lib/auth-db-utils';
 import { serialize } from 'cookie';
+import { randomBytes, pbkdf2Sync } from 'crypto';
 
 /** @type {import('@sveltejs/kit').RequestHandler} */
 export async function post({ request }) {
@@ -15,14 +16,17 @@ export async function post({ request }) {
     };
   }
 
-  // ⚠️ CAUTION: Do not store a plain password like this. Use proper hashing and salting.
+  const salt = randomBytes(32).toString('hex');
+  const passwordHashed = pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
+
   await registerUser({
     fullName,
     initials,
     projects,
     isAdmin,
     email,
-    password
+    salt,
+    passwordHashed
   });
 
   const { id } = await createSession(email);

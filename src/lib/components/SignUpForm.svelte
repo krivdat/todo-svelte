@@ -24,11 +24,11 @@
       return;
     }
 
-    const projectsArray = projects.split(',').map((item) => item.trim());
+    // const projectsArray = projects.split(',').map((item) => item.trim());
     dispatch('submit', {
       fullName,
       initials,
-      projects: projectsArray,
+      projects,
       isAdmin,
       email,
       password
@@ -46,13 +46,13 @@
     bind:value={initials}
     required
   />
-  <Input
+  <!-- <Input
     label="Projects (comma separated list)"
     id="projects"
     name="projects"
     type="text"
     bind:value={projects}
-  />
+  /> -->
   <Input label="Email" id="email" name="email" type="email" bind:value={email} required />
   <Input
     label="Password"

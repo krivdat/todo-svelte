@@ -10,7 +10,7 @@
 - [ ] authentication
   - [x] add users sign-up, sign-in and sign-out features
   - [ ] implement different access rights for every todo list (view only, view+edit, no access)
-  - [ ] add password hashing (currently plain-text passwords)
+  - [x] add password hashing (currently plain-text passwords)
 
 ## Formatting, minor tweaks
 

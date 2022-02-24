@@ -1,14 +1,14 @@
 import { createSession, getUserByEmail } from '$lib/auth-db-utils';
 import { serialize } from 'cookie';
+import { pbkdf2Sync } from 'crypto';
 
 /** @type {import('@sveltejs/kit').RequestHandler} */
 export async function post({ request }) {
   const { email, password } = await request.json();
   const user = await getUserByEmail(email);
 
-  // console.log('Inside sign-in.json', { user });
-  // ⚠️ CAUTION: Do not store a plain passwords. Use proper hashing and salting.
-  if (!user || user.password !== password) {
+  const hashVerify = pbkdf2Sync(password, user.salt, 10000, 64, 'sha512').toString('hex');
+  if (!user || user.passwordHashed !== hashVerify) {
     return {
       status: 401,
       body: {

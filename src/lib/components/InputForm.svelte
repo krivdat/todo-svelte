@@ -87,7 +87,7 @@
     </label>
     <label class="input-wide" for="note"
       >Note:
-      <input type="text" id="note" bind:value={note} placeholder="add notes" />
+      <input type="text" id="note" bind:value={note} />
     </label>
   </div>
   <button type="submit">Add task</button>
@@ -102,7 +102,7 @@
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    gap: 1rem;
+    gap: 0.8rem;
     margin-bottom: 0.5em;
   }
   .form-group > * {
@@ -114,8 +114,10 @@
     font-size: smaller;
   }
   input {
-    height: 1.5em;
-    padding: 0.1em 0.5em;
+    padding: 0.3em 0.5em;
+    border: 1px solid #666;
+    border-radius: 2px;
+    box-shadow: inset 0 0 5px #bbb;
   }
   .input-wide {
     min-width: 50ch;

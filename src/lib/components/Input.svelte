@@ -4,6 +4,7 @@
   export let label;
   export let type = 'text';
   export let name;
+  export let placeholder = '';
   export let required = false;
 
   export let inputRef = null;
@@ -18,7 +19,7 @@
     {label}
   </label>
   <div>
-    <input use:setType {name} {id} {required} bind:value bind:this={inputRef} />
+    <input use:setType {name} {id} {required} {placeholder} bind:value bind:this={inputRef} />
   </div>
 </div>
 
@@ -28,13 +29,14 @@
     font-size: medium;
     font-weight: 700;
     color: #222;
+    margin-top: 0.5em;
   }
   input {
     width: 100%;
     box-shadow: 2px 2px 4px #ccc;
     border: 1px solid #444;
     border-radius: 3px;
-    padding: 0.4em 1em;
+    padding: 0.3em 1em;
     margin: 0.5em auto;
   }
   input:focus {
