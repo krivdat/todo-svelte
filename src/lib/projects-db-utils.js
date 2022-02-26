@@ -18,7 +18,7 @@ export const addProject = async (project) => {
   }
 };
 
-export const updateUserProjects = async (email, projectTitle) => {
+export const addUserProject = async (email, projectTitle) => {
   try {
     const dbConnection = await clientPromise;
     const db = dbConnection.db();
@@ -32,6 +32,26 @@ export const updateUserProjects = async (email, projectTitle) => {
     );
     return Promise.resolve(modifiedCount);
   } catch (error) {
-    return Promise.reject(new Error('Error while registering new user'));
+    return Promise.reject(new Error("Error while adding new user's project"));
+  }
+};
+
+export const delUserProject = async (email, projectTitle) => {
+  try {
+    const dbConnection = await clientPromise;
+    const db = dbConnection.db();
+    const collection = db.collection('users');
+    const existingUser = await collection.findOne({ email });
+    if (!existingUser) return Promise.resolve(null);
+    const newProjects = existingUser.projects.filter((item) => {
+      item.shortTitle === projectTitle;
+    });
+    const { modifiedCount } = await collection.updateOne(
+      { email: email },
+      { $set: { projects: newProjects } }
+    );
+    return Promise.resolve(modifiedCount);
+  } catch (error) {
+    return Promise.reject(new Error("Error while deleting user's project"));
   }
 };

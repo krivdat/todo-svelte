@@ -21,10 +21,12 @@
 
   let error;
 
-  async function handleSubmit({ detail: { shortTitle, fullTitle, createdByEmail, accessPublic } }) {
-    const response = await fetch('/api/projects/add.json', {
+  async function handleSubmit({
+    detail: { shortTitle, fullTitle, createdByEmail, accessPublic, isProtected }
+  }) {
+    const response = await fetch('/api/projects.json', {
       method: 'POST',
-      body: JSON.stringify({ shortTitle, fullTitle, createdByEmail, accessPublic }),
+      body: JSON.stringify({ shortTitle, fullTitle, createdByEmail, accessPublic, isProtected }),
       headers: {
         'Content-Type': 'application/json'
       }

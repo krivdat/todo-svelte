@@ -10,6 +10,7 @@
   let fullTitle = '';
   let createdByEmail = user.email;
   let accessPublic = false;
+  let isProtected = false;
   let error;
 
   const dispatch = createEventDispatcher();
@@ -21,10 +22,15 @@
       shortTitle,
       fullTitle,
       createdByEmail,
-      accessPublic
+      accessPublic,
+      isProtected
     });
   }
 </script>
+
+{#if error}
+  <p class="text-red-600 text-sm font-semibold">{error}</p>
+{/if}
 
 <form on:submit|preventDefault={submit}>
   <Input label="Full title" id="fullTitle" name="fullTitle" type="text" bind:value={fullTitle} />
@@ -47,18 +53,14 @@
       required
     />
   {/if}
-  <input
-    label="Public"
-    type="checkbox"
-    name="accessPublic"
-    id="accessPublic"
-    bind:checked={accessPublic}
-  />
+  <input type="checkbox" name="accessPublic" id="accessPublic" bind:checked={accessPublic} />
   <label for="accessPublic">public</label>
 
-  {#if error}
-    <p class="text-red-600 text-sm font-semibold">{error}</p>
+  {#if user.isAdmin}
+    <input type="checkbox" name="isProtected" id="isProtected" bind:checked={isProtected} />
+    <label for="isProtected">protected</label>
   {/if}
+
   <div class="center">
     <Button type="submit">Add Project</Button>
   </div>
