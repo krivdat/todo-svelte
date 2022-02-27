@@ -5,12 +5,13 @@
   export let todo;
 
   function handleDeleteClick() {
-    // submit delete event
+    if (!confirm('Do you really want to delete the todo item?')) {
+      return null;
+    }
     dispatch('delete');
   }
 
   function handleCompleteClick(e) {
-    // submit completion event
     dispatch('complete');
   }
 </script>

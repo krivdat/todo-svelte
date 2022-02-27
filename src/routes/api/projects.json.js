@@ -76,10 +76,16 @@ export async function del({ request }) {
   try {
     const dbConnection = await clientPromise;
     const db = dbConnection.db();
+
+    // delete record from common projects collection
     const collection = db.collection('projects');
     await collection.deleteOne({ shortTitle: project });
+
+    // delete project collection
     const delCollection = db.collection(project);
     await delCollection.drop();
+
+    // delete project from user's list of projects
     await delUserProject(email, project);
 
     return {
@@ -91,7 +97,7 @@ export async function del({ request }) {
   } catch (error) {
     return {
       status: 500,
-      error: new Error('Error deleting item from database')
+      error: new Error('Error deleting project')
     };
   }
 }

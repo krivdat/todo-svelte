@@ -35,6 +35,10 @@
       {#each $session.user.projects as list}
         <li><a href="/{list}">{list}</a></li>
       {/each}
+    {/if}
+  </ul>
+  <ul class="navigation-auth">
+    {#if $session.user}
       <li><a href="/projects/add">Add project</a></li>
       <li><a href="#" on:click={handleSignOut}>Sign out</a></li>
     {:else}

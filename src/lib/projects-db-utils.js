@@ -43,9 +43,7 @@ export const delUserProject = async (email, projectTitle) => {
     const collection = db.collection('users');
     const existingUser = await collection.findOne({ email });
     if (!existingUser) return Promise.resolve(null);
-    const newProjects = existingUser.projects.filter((item) => {
-      item.shortTitle === projectTitle;
-    });
+    const newProjects = existingUser.projects.filter((item) => item !== projectTitle);
     const { modifiedCount } = await collection.updateOne(
       { email: email },
       { $set: { projects: newProjects } }

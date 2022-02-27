@@ -25,6 +25,8 @@
 </script>
 
 <script>
+  import { session } from '$app/stores';
+
   export let user;
   export let projects;
   export let protectedProjects;
@@ -42,7 +44,10 @@
         body: JSON.stringify({ project, email: user.email })
       });
       if (res.ok) {
+        console.log('In index.svelte, deleting project', { project });
         user.projects = user.projects.filter((item) => item !== project);
+        console.log('user.projects: ', user.projects);
+        $session.user.projects = user.projects;
         protectedProjects = protectedProjects.filter((item) => item !== project);
         projects = projects.filter((item) => item.shortTitle !== project);
         return;
@@ -65,8 +70,8 @@
   </div>
 
   <h2>Your projects</h2>
-  <div class="projects">
-    {#if user.projects.length > 0}
+  {#if user.projects.length > 0}
+    <div class="projects">
       {#each user.projects as project (project)}
         <a href="/{project}"
           ><div class="project">
@@ -83,10 +88,10 @@
           {/if}
         </div>
       {/each}
-    {:else}
-      <span>you have no projects assigned</span>
-    {/if}
-  </div>
+    </div>
+  {:else}
+    <span>you have no projects assigned</span>
+  {/if}
 </section>
 
 <style>
