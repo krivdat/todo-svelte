@@ -71,7 +71,6 @@
     border: none;
     outline: none;
     color: azure;
-    min-wid
     padding: 0.4em 0.5em;
     background-color: inherit;
     font-family: inherit; /* Important for vertical align on mobile phones */
