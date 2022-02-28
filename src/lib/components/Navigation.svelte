@@ -21,33 +21,33 @@
 </script>
 
 <nav>
-  <ul class="navigation-general">
+  <div class="navigation-general">
     {#each navigation as link}
-      <li>
-        <a href={link.href}>
-          {link.name}
-        </a>
-      </li>
+      <a href={link.href}>{link.name}</a>
     {/each}
-  </ul>
-  <ul class="navigation-lists">
     {#if $session.user}
-      {#each $session.user.projects as list}
-        <li><a href="/{list}">{list}</a></li>
-      {/each}
+      <div class="dropdown-container">
+        <button class="dropbtn">Your projects <i class="fa fa-caret-down" /></button>
+        <div class="dropdown-content">
+          {#each $session.user.projects as list}
+            <a href="/{list}">{list}</a>
+          {/each}
+        </div>
+      </div>
     {/if}
-  </ul>
-  <ul class="navigation-auth">
+  </div>
+
+  <div class="navigation-auth">
     {#if $session.user}
-      <li><a href="/projects/add">Add project</a></li>
-      <li><a href="#" on:click={handleSignOut}>Sign out</a></li>
+      <a href="/projects/add">Add project</a>
+      <a href="#" on:click={handleSignOut}>Sign out</a>
     {:else}
-      <li><a href="/sign-in">Sign in</a></li>
+      <a href="/sign-in">Sign in</a>
       <!-- {#if $session.user.isAdmin} -->
-      <li><a href="/sign-up">Sign up</a></li>
+      <a href="/sign-up">Sign up</a>
       <!-- {/if} -->
     {/if}
-  </ul>
+  </div>
 </nav>
 
 <style>
@@ -59,28 +59,53 @@
     color: azure;
     font-size: 0.9rem;
   }
-  nav > ul {
+  nav > div {
     display: flex;
     align-items: stretch;
     margin: 0;
     padding: 0;
   }
-  nav > ul li {
+  .dropdown-container {
+    overflow: hidden;
     display: flex;
-    align-items: center;
-    padding: 0.3em 0.5em;
+    flex-direction: column;
   }
-  nav > ul li:hover {
-    background-color: rgba(150, 138, 123, 0.5);
+  .dropbtn {
+    font-size: 0.9rem;
+    border: none;
+    outline: none;
+    color: azure;
+    padding: 0.4em 0.5em;
+    background-color: inherit;
+    font-family: inherit; /* Important for vertical align on mobile phones */
+    margin: 0; /* Important for vertical align on mobile phones */
   }
   a {
+    /* display: flex; */
+    /* align-items: center; */
+    padding: 0.4em 0.5em;
     color: azure;
     text-decoration: none;
   }
-  a:hover {
-    text-decoration: underline;
+  a:hover,
+  .dropbtn:hover {
+    background-color: rgba(150, 138, 123, 0.5);
+    /* text-decoration: underline; */
   }
   a:visited {
     color: inherit;
+  }
+  /* Dropdown content (hidden by default) */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #222;
+    min-width: 10em;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+  .dropdown-container:hover .dropdown-content {
+    display: flex;
+    flex-direction: column;
   }
 </style>

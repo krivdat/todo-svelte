@@ -15,7 +15,7 @@
   <slot />
 </main>
 
-<footer>Copyright 2022 Tomas Krivda</footer>
+<footer><span>&copy; 2022 <a href="https://www.tomaskrivda.online">Tomas Krivda</a></span></footer>
 
 <style>
   main {
@@ -37,5 +37,13 @@
     text-align: center;
     margin: 2rem auto;
     font-size: small;
+  }
+
+  footer a {
+    text-decoration: none;
+    color: inherit;
+  }
+  footer a:hover {
+    text-decoration: underline;
   }
 </style>
