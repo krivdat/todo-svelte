@@ -1,6 +1,8 @@
 # Todo App for Projects
 
-Todo app created mainly for construction development projects, but possible to use for other purposes. Uses Mongodb database for permanent data storage.
+Todo web app created for various professional projects. Users can create their own projects (groups of todo lists) with tasks. Each task can have it's category, responsible person (internal end external), due date and additional note. Tasks can be filtered by their status (pending, due today, overdue, completed) or responsible person. Each task can be marked as done or permanently deleted.
+
+The app is made with Svelte/SvelteKit and uses MongoDB database for permanent data storage.
 
 ## Installation & Building
 
