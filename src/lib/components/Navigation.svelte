@@ -65,16 +65,13 @@
     margin: 0;
     padding: 0;
   }
-  .dropdown-container {
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-  }
   .dropbtn {
+    /* display: block; */
     font-size: 0.9rem;
     border: none;
     outline: none;
     color: azure;
+    min-wid
     padding: 0.4em 0.5em;
     background-color: inherit;
     font-family: inherit; /* Important for vertical align on mobile phones */
@@ -90,17 +87,16 @@
   a:hover,
   .dropbtn:hover {
     background-color: rgba(150, 138, 123, 0.5);
-    /* text-decoration: underline; */
   }
   a:visited {
     color: inherit;
   }
-  /* Dropdown content (hidden by default) */
   .dropdown-content {
     display: none;
     position: absolute;
     background-color: #222;
     min-width: 10em;
+    overflow: hidden;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
   }
