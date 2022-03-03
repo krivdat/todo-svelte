@@ -4,13 +4,6 @@
   const dispatch = createEventDispatcher();
   export let todo;
 
-  function handleDeleteClick() {
-    if (!confirm('Do you really want to delete the todo item?')) {
-      return null;
-    }
-    dispatch('delete');
-  }
-
   function handleCompleteClick(e) {
     dispatch('complete');
   }
@@ -36,7 +29,11 @@
 
 <div class="group">
   <div class="notes">{todo.note}</div>
-  <i class="far fa-trash-alt icon-danger right" aria-hidden="true" on:click={handleDeleteClick} />
+  <i
+    class="far fa-trash-alt icon-danger right"
+    aria-hidden="true"
+    on:click={() => dispatch('delete')}
+  />
   <button
     class="btn-done"
     type="button"

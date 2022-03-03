@@ -26,14 +26,17 @@
 
 <script>
   import { session } from '$app/stores';
+  import Modal from '$lib/components/Modal.svelte';
+  let modal;
 
   export let user;
   export let projects;
   export let protectedProjects;
 
   async function handleDeleteProject(project) {
-    if (!confirm(`Do you really want to delete project ${project}`)) {
-      return false;
+    const response = await modal.open(`Do you really want to delete project ${project}`);
+    if (response === 'cancelled') {
+      return null;
     }
     try {
       const res = await fetch(`/api/projects.json`, {
@@ -44,9 +47,7 @@
         body: JSON.stringify({ project, email: user.email })
       });
       if (res.ok) {
-        console.log('In index.svelte, deleting project', { project });
         user.projects = user.projects.filter((item) => item !== project);
-        console.log('user.projects: ', user.projects);
         $session.user.projects = user.projects;
         protectedProjects = protectedProjects.filter((item) => item !== project);
         projects = projects.filter((item) => item.shortTitle !== project);
@@ -59,6 +60,8 @@
     }
   }
 </script>
+
+<Modal bind:this={modal} />
 
 <h1>Todo Lists</h1>
 <section class="welcome">

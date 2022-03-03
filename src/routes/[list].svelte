@@ -9,16 +9,20 @@
 
     const list = params.list;
     try {
-      const res = await fetch(`/api/todos.json?list=${list}`);
-      const { todos } = await res.json();
-      if (res.ok) {
+      const res1 = await fetch(`/api/todos.json?list=${list}`);
+      const { todos } = await res1.json();
+      const res2 = await fetch('/api/projects.json');
+      const { projects } = await res2.json();
+      const project = projects.find((item) => item.shortTitle === list);
+
+      if (res1.ok && res2.ok) {
         const completedList = todos.filter((item) => item.completed);
         const uncompletedList = todos.filter((item) => !item.completed);
         uncompletedList.sort((a, b) => new Date(a.dateDue) - new Date(b.dateDue));
         completedList.sort((a, b) => new Date(a.dateDue) - new Date(b.dateDue));
         const sortedList = [...uncompletedList, ...completedList];
         return {
-          props: { todos: sortedList, list, user: session.user }
+          props: { todos: sortedList, list, user: session.user, project }
         };
       }
 
@@ -36,13 +40,18 @@
 </script>
 
 <script>
-  export let todos;
-  export let list;
-  export let user;
   import { fade, slide } from 'svelte/transition';
   import Todo from '$lib/components/Todo.svelte';
   import InputForm from '$lib/components/InputForm.svelte';
+  import Modal from '$lib/components/Modal.svelte';
 
+  export let todos;
+  export let list;
+  export let user;
+  export let project;
+  console.log({ project });
+
+  let modal;
   let filterRules = {};
   let respIntSelected = '';
   let respExtSelected = '';
@@ -123,7 +132,10 @@
   }
 
   async function handleDelete(id) {
-    // console.log(id);
+    const response = await modal.open('Do you really want to delete toto item?');
+    if (response === 'cancelled') {
+      return null;
+    }
     try {
       const res = await fetch(`/api/todos.json?list=${list}`, {
         method: 'DELETE',
@@ -200,9 +212,11 @@
   <title>Todo List</title>
 </svelte:head>
 
+<Modal bind:this={modal} />
+
 <section class="input-and-filters">
   <div class="top-title">
-    <h1>Task manager - {list}</h1>
+    <h1>Task manager - {project.fullTitle}</h1>
     <button on:click={() => (showInputForm = !showInputForm)} title="show/hide input form">
       {#if showInputForm}
         ▲

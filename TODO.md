@@ -11,6 +11,7 @@
   - [x] add users sign-up, sign-in and sign-out features
   - [ ] implement different access rights for every todo list (view only, view+edit, no access)
   - [x] add password hashing (currently plain-text passwords)
+- [x] add custom confirmation dialog for deleting projects and todos
 
 ## Formatting, minor tweaks
 
