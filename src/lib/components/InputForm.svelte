@@ -9,6 +9,7 @@
   let note = '';
   let dateAdded, dateDue;
   let completed = false;
+  let priority = 0; // 0 - standard, 1 - high, 2 - top
 
   const emptyNewTodo = () => {
     subject = '';
@@ -18,6 +19,7 @@
     note = '';
     dateAdded = '';
     dateDue = '';
+    priority = '0';
   };
 
   const handleSubmit = () => {
@@ -48,7 +50,8 @@
       dateDue,
       dateAdded,
       note,
-      completed
+      completed,
+      priority
     };
     // dispatch new todo object to main app compoment
     dispatch('submit', newTodo);
@@ -82,8 +85,16 @@
       <input type="date" bind:value={dateDue} />
     </label>
     <label
-      >Added (default today):
+      >Added (default today)
       <input type="date" bind:value={dateAdded} />
+    </label>
+    <label
+      >Priority
+      <select name="priority" id="priority" bind:value={priority}>
+        <option value="0">std</option>
+        <option value="1">high</option>
+        <option value="2">top</option>
+      </select>
     </label>
     <label class="input-wide" for="note"
       >Note:

@@ -55,9 +55,16 @@
   let filterRules = {};
   let respIntSelected = '';
   let respExtSelected = '';
+  let prioritySelected = '';
   let showInputForm = true;
 
-  $: todosFiltered = filterTodos(todos, filterRules, respIntSelected, respExtSelected);
+  $: todosFiltered = filterTodos(
+    todos,
+    filterRules,
+    respIntSelected,
+    respExtSelected,
+    prioritySelected
+  );
   $: totalTodos = todos.length;
   $: totalTodosFiltered = todosFiltered.length;
   $: completedTodos = todos.filter((todo) => todo.completed).length;
@@ -84,7 +91,7 @@
     }
   }
 
-  function filterTodos(list, rules, respInt, respExt) {
+  function filterTodos(list, rules, respInt, respExt, priority) {
     // console.log('Inside filter function. ', { rules }, { respIntSelected }, { respExtSelected });
     let result;
     if (rules.overdue) {
@@ -100,7 +107,9 @@
     result = result.filter((todo) => {
       if (
         (respInt != '' && todo.responsibleIntern != respInt) ||
-        (respExt != '' && todo.responsibleExtern != respExt)
+        (respExt != '' && todo.responsibleExtern != respExt) ||
+        (priority != '' && priority != '0' && todo.priority != priority) ||
+        (priority === '0' && !todo.priority == ('0' || ''))
       ) {
         return false;
       }
@@ -259,6 +268,15 @@
           {#each respExtList as person}
             <option value={person}>{person}</option>
           {/each}
+        </select>
+      </label>
+      <label for="filterPriority"
+        ><span>priority</span>
+        <select name="filterPriority" id="filterPriority" bind:value={prioritySelected}>
+          <option value="">all</option>
+          <option value="0">std</option>
+          <option value="1">high</option>
+          <option value="2">top</option>
         </select>
       </label>
     </div>

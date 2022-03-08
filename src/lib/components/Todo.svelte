@@ -10,6 +10,15 @@
 </script>
 
 <div class="group">
+  <div>
+    {#if todo.priority === '0' || !todo.priority}
+      <i class="fa-regular fa-clock" />
+    {:else if todo.priority === '1'}
+      <i class="fa-solid fa-exclamation priority-high" />
+    {:else if todo.priority === '2'}
+      <i class="fa-regular fa-circle-exclamation priority-top" />
+    {/if}
+  </div>
   <div class="task">{todo.task}</div>
   <div>({todo.subject})</div>
 </div>
@@ -113,5 +122,12 @@
   }
   .icon-danger:hover {
     color: red;
+  }
+  i.priority-high {
+    color: red;
+  }
+  i.priority-top {
+    color: red;
+    font-weight: 800;
   }
 </style>
