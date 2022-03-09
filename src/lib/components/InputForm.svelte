@@ -1,17 +1,38 @@
 <script>
   import { createEventDispatcher } from 'svelte';
 
-  const dispatch = createEventDispatcher();
+  let _id = '';
   let subject = '';
   let task = '';
-  let responsibleIntern = '';
   let responsibleExtern = '';
+  let responsibleIntern = '';
   let note = '';
-  let dateAdded, dateDue;
+  let dateAdded = '';
+  let dateDue = '';
   let completed = false;
-  let priority = 0; // 0 - standard, 1 - high, 2 - top
+  let priority = '0';
+
+  let taskFieldRef;
+
+  export function setFormContent(content) {
+    _id = content._id;
+    subject = content.subject;
+    task = content.task;
+    responsibleExtern = content.responsibleExtern;
+    responsibleIntern = content.responsibleIntern;
+    note = content.note;
+    dateAdded = content.dateAdded;
+    dateDue = content.dateDue;
+    completed = content.completed;
+    priority = content.priority;
+
+    taskFieldRef.focus();
+  }
+
+  const dispatch = createEventDispatcher();
 
   const emptyNewTodo = () => {
+    _id = '';
     subject = '';
     task = '';
     responsibleExtern = '';
@@ -43,6 +64,7 @@
         (date.getDate() > 9 ? date.getDate() : '0' + date.getDate());
     }
     const newTodo = {
+      _id,
       subject,
       task,
       responsibleExtern,
@@ -53,7 +75,7 @@
       completed,
       priority
     };
-    // dispatch new todo object to main app compoment
+    // dispatch new todo object to main app component
     dispatch('submit', newTodo);
     emptyNewTodo();
   };
@@ -64,7 +86,7 @@
   <div class="form-group">
     <label class="input-wide"
       >Task
-      <input type="text" bind:value={task} />
+      <input type="text" bind:value={task} bind:this={taskFieldRef} />
     </label>
   </div>
   <div class="form-group">

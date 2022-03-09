@@ -38,11 +38,8 @@
 
 <div class="group">
   <div class="notes">{todo.note}</div>
-  <i
-    class="far fa-trash-alt icon-danger right"
-    aria-hidden="true"
-    on:click={() => dispatch('delete')}
-  />
+  <i class="fa-solid fa-pen right" aria-hidden="true" on:click={() => dispatch('edit')} />
+  <i class="far fa-trash-alt icon-danger" aria-hidden="true" on:click={() => dispatch('delete')} />
   <button
     class="btn-done"
     type="button"

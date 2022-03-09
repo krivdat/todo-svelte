@@ -70,7 +70,7 @@ export async function post({ request, url }) {
 }
 
 export async function put({ request, url }) {
-  const { id, change } = await request.json();
+  const { _id, change } = await request.json();
   const list = url.searchParams.get('list');
 
   try {
@@ -88,7 +88,7 @@ export async function put({ request, url }) {
     }
 
     const collection = db.collection(list);
-    const { modifiedCount } = await collection.updateOne({ _id: ObjectId(id) }, { $set: change });
+    const { modifiedCount } = await collection.updateOne({ _id: ObjectId(_id) }, { $set: change });
     return {
       status: 200,
       body: {

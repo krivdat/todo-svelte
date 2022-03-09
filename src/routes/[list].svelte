@@ -27,7 +27,7 @@
       }
 
       return {
-        status: res.status,
+        status: `${res1.status} and ${res2.status}`,
         error: new Error('Could not fetch todos')
       };
     } catch (err) {
@@ -49,7 +49,7 @@
   export let list;
   export let user;
   export let project;
-  console.log({ project });
+  // console.log({ project });
 
   let modal;
   let filterRules = {};
@@ -57,6 +57,7 @@
   let respExtSelected = '';
   let prioritySelected = '';
   let showInputForm = true;
+  let inputForm;
 
   $: todosFiltered = filterTodos(
     todos,
@@ -119,15 +120,30 @@
     return result;
   }
 
-  async function handleSubmit(e) {
+  async function handleSubmit({ detail }) {
+    let res;
     try {
-      const res = await fetch(`/api/todos.json?list=${list}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(e.detail)
-      });
+      if (detail._id === '') {
+        const { _id, ...todo } = detail;
+        res = await fetch(`/api/todos.json?list=${list}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(todo)
+        });
+      } else {
+        // update existing todo
+        const { _id, ...change } = detail;
+
+        res = await fetch(`/api/todos.json?list=${list}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ _id, change })
+        });
+      }
 
       if (res.ok) {
         fetchTodos();
@@ -164,8 +180,8 @@
     }
   }
 
-  async function handleComplete(id) {
-    const todo = todos.find((todo) => todo._id == id);
+  async function handleComplete(_id) {
+    const todo = todos.find((todo) => todo._id == _id);
     try {
       const res = await fetch(`/api/todos.json?list=${list}`, {
         method: 'PUT',
@@ -173,7 +189,7 @@
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          id,
+          _id,
           change: { completed: !todo.completed }
         })
       });
@@ -187,6 +203,11 @@
     } catch (error) {
       return new Error('Could add new todo');
     }
+  }
+
+  function handleEditTodo(id) {
+    const editedTodo = todos.find((todo) => todo._id == id);
+    inputForm.setFormContent(editedTodo);
   }
 
   function showCompleted() {
@@ -237,7 +258,7 @@
 
   {#if showInputForm}
     <div transition:slide>
-      <InputForm on:submit={handleSubmit} />
+      <InputForm bind:this={inputForm} on:submit={handleSubmit} />
     </div>
   {/if}
 
@@ -296,7 +317,12 @@
   <ul>
     {#each todosFiltered as todo (todo._id)}
       <li class:completed={todo.completed} transition:fade={{ duration: 150 }}>
-        <Todo {todo} on:delete={handleDelete(todo._id)} on:complete={handleComplete(todo._id)} />
+        <Todo
+          {todo}
+          on:delete={handleDelete(todo._id)}
+          on:complete={handleComplete(todo._id)}
+          on:edit={handleEditTodo(todo._id)}
+        />
       </li>
     {:else}
       <p>nothing to do</p>

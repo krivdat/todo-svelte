@@ -3,7 +3,7 @@
 ## New features
 
 - [x] add option to filter todos based on responsible person (internal, external)
-- [ ] add possibility to edit existing todo
+- [x] add possibility to edit existing todo
 - [x] add option to filter only todos due today
 - [ ] add option to filter todos due within next 7 days
 - [x] sort todos by due date (closest date on top)
