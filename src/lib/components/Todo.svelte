@@ -12,11 +12,11 @@
 <div class="group">
   <div>
     {#if todo.priority === '0' || !todo.priority}
-      <i class="fa-regular fa-clock" />
+      <i class="fa-regular fa-clock" title="standard priority" />
     {:else if todo.priority === '1'}
-      <i class="fa-solid fa-exclamation priority-high" />
+      <i class="fa-solid fa-exclamation priority-high" title="high priority" />
     {:else if todo.priority === '2'}
-      <i class="fa-regular fa-circle-exclamation priority-top" />
+      <i class="fa-regular fa-circle-exclamation priority-top" title="top priority" />
     {/if}
   </div>
   <div class="task">{todo.task}</div>
@@ -38,13 +38,24 @@
 
 <div class="group">
   <div class="notes">{todo.note}</div>
-  <i class="fa-solid fa-pen right" aria-hidden="true" on:click={() => dispatch('edit')} />
-  <i class="far fa-trash-alt icon-danger" aria-hidden="true" on:click={() => dispatch('delete')} />
+  <i
+    class="fa-solid fa-pen right"
+    aria-hidden="true"
+    on:click={() => dispatch('edit')}
+    title="edit task"
+  />
+  <i
+    class="far fa-trash-alt icon-danger"
+    aria-hidden="true"
+    on:click={() => dispatch('delete')}
+    title="delete task"
+  />
   <button
     class="btn-done"
     type="button"
     class:completed={todo.completed}
     on:click={handleCompleteClick}
+    title="mark as complete"
   >
     Done
   </button>
@@ -99,8 +110,8 @@
   }
 
   .btn-done {
-    color: black;
-    border: 1px solid black;
+    color: #999;
+    border: 1px solid #999;
     opacity: 1;
     background-color: transparent;
     padding: 0.1em 0.4em;

@@ -1,5 +1,6 @@
 <script>
   import { createEventDispatcher } from 'svelte';
+  import Button from '$lib/components/Button.svelte';
 
   let _id = '';
   let subject = '';
@@ -123,7 +124,8 @@
       <input type="text" id="note" bind:value={note} />
     </label>
   </div>
-  <button type="submit">Add task</button>
+  <Button type="submit">Add task</Button>
+  <!-- <button type="submit">Add task</button> -->
 </form>
 
 <style>

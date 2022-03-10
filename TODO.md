@@ -13,7 +13,8 @@
   - [x] add password hashing (currently plain-text passwords)
 - [x] add custom confirmation dialog for deleting projects and todos
 - [x] add task priorities: standard, high, top
-- [ ] add revised due date with possibility to change it in addition to original due date, which will remain always the same
+- [ ] add revised due date with possibility to change it in addition to original due date, which will remain always the same as set when adding the task
+- [ ] add search box
 
 ## Formatting, minor tweaks
 
@@ -21,3 +22,6 @@
 - [ ] increase input fields height on iPhone mobile screen - tested on Iphone SE on Safari and Chrome, need to check other devices
 - [x] add option to hide/show input form
 - [ ] optically divide filters area (filter buttons and tasks summary)
+- [x] add tooltips to icons in Todo.svelte: priority, edit, delete
+- [ ] change the way of hiding task input form so that when it has some content in it will not be deleted during hiding/showing the form (use css instead of Svelte conditional rendering)
+- [ ] add loading spinner for requests/actions that take longer to respond e.g. marking task as done, switching between different projects, etc. In general for all actions working with the database.
