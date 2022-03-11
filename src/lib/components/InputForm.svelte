@@ -166,17 +166,4 @@
   .input-small {
     max-width: 12ch;
   }
-
-  button {
-    padding: 0.4em 1em;
-    margin-top: 0.5rem;
-    background-color: rgba(150, 138, 123, 1);
-    color: white;
-    border: none;
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
-  }
-  button:hover {
-    cursor: pointer;
-    opacity: 0.8;
-  }
 </style>

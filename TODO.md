@@ -15,7 +15,7 @@
 - [x] add task priorities: standard, high, top
 - [x] add revised due date with possibility to change it in addition to original due date, which will remain always the same as set when adding the task
 - [ ] add search box
-- [ ] add PWA 
+- [x] add PWA 
 - [ ] add export/import to/from xls, csv
 
 ## Formatting, minor tweaks
