@@ -25,5 +25,5 @@
 - [x] add option to hide/show input form
 - [ ] optically divide filters area (filter buttons and tasks summary)
 - [x] add tooltips to icons in Todo.svelte: priority, edit, delete
-- [ ] change the way of hiding task input form so that when it has some content in it will not be deleted during hiding/showing the form (use css instead of Svelte conditional rendering)
-- [ ] add loading spinner for requests/actions that take longer to respond e.g. marking task as done, switching between different projects, etc. In general for all actions working with the database.
+- [x] change the way of hiding task input form so that when it has some content in it will not be deleted during hiding/showing the form (use css instead of Svelte conditional rendering)
+- [x] add loading spinner for requests/actions that take longer to respond e.g. marking task as done, switching between different projects, etc. In general for all actions working with the database.

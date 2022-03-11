@@ -1,4 +1,8 @@
 <script context="module">
+  function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
   export async function load({ fetch, params, session }) {
     if (!session?.user) {
       return {

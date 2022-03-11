@@ -1,11 +1,15 @@
 <script>
-  // import { page } from '$app/stores';
+  import { navigating } from '$app/stores';
+
+  import { loading } from '$lib/loading';
+  import Loading from '$lib/components/Loading.svelte';
   import '../global.css';
   import Navigation from '$lib/components/Navigation.svelte';
 
-  // const error = $page.error;
-  // console.log('page.error: ', $page.error);
+  $: loading.setNavigate(!!$navigating);
 </script>
+
+<Loading />
 
 <header>
   <Navigation />
