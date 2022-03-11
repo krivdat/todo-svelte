@@ -271,7 +271,7 @@
     <div class="filters">
       <button on:click={showAll}>All</button>
       <button on:click={showPending}>Pending</button>
-      <button on:click={showDueToday}>Due today</button>
+      <button on:click={showDueToday}>Today</button>
       <button on:click={showOverdue}>Overdue</button>
       <button on:click={showCompleted}>Completed</button>
     </div>
