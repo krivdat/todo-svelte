@@ -10,6 +10,7 @@
   let note = '';
   let dateAdded = '';
   let dateDue = '';
+  let dateDueOriginal = '';
   let completed = false;
   let priority = '0';
 
@@ -24,6 +25,7 @@
     note = content.note;
     dateAdded = content.dateAdded;
     dateDue = content.dateDue;
+    dateDueOriginal = content.dateDueOriginal;
     completed = content.completed;
     priority = content.priority;
 
@@ -41,6 +43,7 @@
     note = '';
     dateAdded = '';
     dateDue = '';
+    dateDueOriginal = '';
     priority = '0';
   };
 
@@ -64,6 +67,9 @@
         '-' +
         (date.getDate() > 9 ? date.getDate() : '0' + date.getDate());
     }
+    if (!dateDueOriginal) {
+      dateDueOriginal = dateDue;
+    }
     const newTodo = {
       _id,
       subject,
@@ -71,6 +77,7 @@
       responsibleExtern,
       responsibleIntern,
       dateDue,
+      dateDueOriginal,
       dateAdded,
       note,
       completed,
@@ -125,7 +132,6 @@
     </label>
   </div>
   <Button type="submit">Add task</Button>
-  <!-- <button type="submit">Add task</button> -->
 </form>
 
 <style>

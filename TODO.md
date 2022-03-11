@@ -13,8 +13,10 @@
   - [x] add password hashing (currently plain-text passwords)
 - [x] add custom confirmation dialog for deleting projects and todos
 - [x] add task priorities: standard, high, top
-- [ ] add revised due date with possibility to change it in addition to original due date, which will remain always the same as set when adding the task
+- [x] add revised due date with possibility to change it in addition to original due date, which will remain always the same as set when adding the task
 - [ ] add search box
+- [ ] add PWA 
+- [ ] add export/import to/from xls, csv
 
 ## Formatting, minor tweaks
 

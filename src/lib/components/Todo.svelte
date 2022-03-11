@@ -28,6 +28,11 @@
   <div>/</div>
   <div>{todo.responsibleExtern}</div>
   <div class="right">
+    {#if todo.dateDueOriginal && todo.dateDue !== todo.dateDueOriginal}
+      <span>({todo.dateDueOriginal}) -></span>
+    {/if}
+  </div>
+  <div>
     {#if Date.parse(todo.dateDue) < Date.now()}
       <span class="overdue">{todo.dateDue}</span>
     {:else}

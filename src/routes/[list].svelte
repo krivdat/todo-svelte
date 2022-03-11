@@ -124,6 +124,7 @@
     let res;
     try {
       if (detail._id === '') {
+        // add new todo
         const { _id, ...todo } = detail;
         res = await fetch(`/api/todos.json?list=${list}`, {
           method: 'POST',
@@ -256,11 +257,9 @@
     </button>
   </div>
 
-  {#if showInputForm}
-    <div transition:slide>
-      <InputForm bind:this={inputForm} on:submit={handleSubmit} />
-    </div>
-  {/if}
+  <div transition:slide class:hidden={!showInputForm}>
+    <InputForm bind:this={inputForm} on:submit={handleSubmit} />
+  </div>
 
   <!-- Filter -->
 
@@ -419,5 +418,9 @@
     font-size: 10px;
     line-height: 10px;
     height: 20px;
+  }
+  .hidden {
+    height: 0;
+    overflow: hidden;
   }
 </style>
