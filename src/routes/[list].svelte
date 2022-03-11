@@ -254,9 +254,9 @@
     <h1>Task manager - {project.fullTitle}</h1>
     <button on:click={() => (showInputForm = !showInputForm)} title="show/hide input form">
       {#if showInputForm}
-        ▲
+        <i class="fa-solid fa-angles-up" />
       {:else}
-        ▼
+        <i class="fa-solid fa-angles-down" />
       {/if}
     </button>
   </div>
