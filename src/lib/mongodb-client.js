@@ -5,9 +5,11 @@ import { MONGODB_URI } from '$lib/env';
 import { MongoClient } from 'mongodb';
 
 let uri;
+console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV === 'production') {
   // For production
   uri = process.env['MONGODB_URI'];
+  // uri = MONGODB_URI;
 } else {
   // For development
   uri = MONGODB_URI;
