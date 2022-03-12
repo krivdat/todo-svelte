@@ -13,7 +13,7 @@ self.addEventListener('install', (event) => {
       .open(FILES)
       .then((cache) => cache.addAll(to_cache))
       .then(() => self.skipWaiting())
-      .catch(err => console.error(err);)
+      .catch((err) => console.error(err))
   );
 });
 
