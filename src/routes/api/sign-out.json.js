@@ -13,6 +13,7 @@ export async function get({ request }) {
     headers: {
       'Set-Cookie': serialize('session_id', '', {
         path: '/',
+        secure: process.env.NODE_ENV === 'production',
         expires: new Date(0)
       })
     }
