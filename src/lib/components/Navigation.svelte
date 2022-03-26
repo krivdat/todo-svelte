@@ -77,8 +77,6 @@
     margin: 0; /* Important for vertical align on mobile phones */
   }
   a {
-    /* display: flex; */
-    /* align-items: center; */
     padding: 0.4em 0.5em;
     color: azure;
     text-decoration: none;
@@ -102,5 +100,12 @@
   .dropdown-container:hover .dropdown-content {
     display: flex;
     flex-direction: column;
+  }
+
+  @media screen and (max-width: 400px) {
+    a,
+    .dropbtn {
+      padding: 1em 0.8em;
+    }
   }
 </style>

@@ -36,7 +36,7 @@
     box-shadow: 2px 2px 4px #ccc;
     border: 1px solid #444;
     border-radius: 3px;
-    padding: 0.3em 1em;
+    padding: 0.5em 0.7em;
     margin: 0.5em auto;
   }
   input:focus {

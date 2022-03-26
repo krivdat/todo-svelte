@@ -135,15 +135,12 @@
 </form>
 
 <style>
-  form {
-    margin-bottom: 1rem;
-  }
   .form-group {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    gap: 0.8rem;
+    gap: 0.5rem;
     margin-bottom: 0.5em;
   }
   .form-group > * {
@@ -156,6 +153,7 @@
   }
   input {
     padding: 0.3em 0.5em;
+    margin-top: 0.1em;
     border: 1px solid #666;
     border-radius: 2px;
     box-shadow: inset 0 0 5px #bbb;
@@ -165,5 +163,14 @@
   }
   .input-small {
     max-width: 12ch;
+  }
+
+  @media screen and (max-width: 400px) {
+    input {
+      padding: 0.6em 0.6em;
+    }
+    select {
+      padding: 0.4em 0.5em;
+    }
   }
 </style>
