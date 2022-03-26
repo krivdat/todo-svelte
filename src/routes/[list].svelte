@@ -252,7 +252,11 @@
 <section class="input-and-filters">
   <div class="top-title">
     <h1>Task manager - {project.fullTitle}</h1>
-    <button on:click={() => (showInputForm = !showInputForm)} title="show/hide input form">
+    <button
+      id="icon-show-hide"
+      on:click={() => (showInputForm = !showInputForm)}
+      title="show/hide input form"
+    >
       {#if showInputForm}
         <i class="fa-solid fa-angles-up" />
       {:else}
@@ -344,26 +348,28 @@
 <style>
   section.input-and-filters {
     background-color: rgba(150, 138, 123, 0.5);
-    padding: 1rem;
+    padding: 1rem 1rem 0.5rem;
+    box-shadow: 0px 3px 7px #ccc;
   }
   section.tasks {
-    padding: 1rem;
+    padding: 1rem 0.5rem;
   }
   h1 {
     margin-top: 0;
   }
   h2 {
-    margin-top: 0;
+    margin-top: 0.4em;
     margin-bottom: 0.6em;
+    font-size: 1.2rem;
   }
   ul {
     list-style-type: none;
     padding-left: 0;
   }
   li {
-    padding: 0.4rem;
+    padding: 0.4rem 0.4rem 0.1rem;
     background-color: rgba(150, 138, 123, 0.3);
-    border-radius: 5px;
+    border-radius: 3px;
   }
 
   li.completed {
@@ -401,7 +407,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1.2em;
+    margin-bottom: 0.5em;
     font-size: smaller;
     gap: 0.5em;
   }
@@ -426,5 +432,23 @@
   .hidden {
     height: 0;
     overflow: hidden;
+  }
+
+  @media screen and (max-width: 400px) {
+    #icon-show-hide {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 3.5em;
+      height: 2.5em;
+    }
+
+    .filters button {
+      padding: 0.8em;
+    }
+
+    .filters select {
+      padding: 0.5em;
+    }
   }
 </style>

@@ -22,7 +22,7 @@
     color: white;
     background-color: rgba(150, 138, 123, 1);
     box-shadow: 2px 2px 4px #ccc;
-    margin: 1em 1em;
+    margin: 1em 0;
   }
   button:hover {
     cursor: pointer;

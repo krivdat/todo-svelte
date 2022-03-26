@@ -44,12 +44,14 @@
 <div class="group">
   <div class="notes">{todo.note}</div>
   <i
+    id="icon-edit"
     class="fa-solid fa-pen right"
     aria-hidden="true"
     on:click={() => dispatch('edit')}
     title="edit task"
   />
   <i
+    id="icon-delete"
     class="far fa-trash-alt icon-danger"
     aria-hidden="true"
     on:click={() => dispatch('delete')}
@@ -142,5 +144,13 @@
   i.priority-top {
     color: red;
     font-weight: 800;
+  }
+
+  @media screen and (max-width: 400px) {
+    #icon-edit,
+    #icon-delete,
+    .btn-done {
+      padding: 0.5em;
+    }
   }
 </style>
