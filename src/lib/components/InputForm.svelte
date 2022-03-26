@@ -170,7 +170,7 @@
       padding: 0.6em 0.6em;
     }
     select {
-      padding: 0.5em;
+      padding: 0.4em 0.5em;
     }
   }
 </style>
